@@ -69,11 +69,16 @@ a {
 }
 
 /* Header Style */
-.navbar .navbar-brand {
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:visited{
 	text-align: center;
 	width: 100%;
 	position: relative;
-	padding: 25px 0px;
+	padding: 20px 0px;
+	font-weight: bold;
+	color: #3d8bcd;
+	font-size: 30px;	
 }
 .bg-dark {
 	background-color: #fff!important;
@@ -285,10 +290,13 @@ a {
 	list-style: none;
 	display: inline-block;
 }
-.footer .logo img {
+.footer .logo{
 	max-width: 100%;
 	margin-top: 60px;
 	margin-bottom: 40px;
+	color: #3d8bcd;
+	font-size: 30px;
+	font-weight: 550;
 }
 .footer .footer-menu {
 	margin-bottom: 40px;
@@ -690,7 +698,7 @@ a {
 		margin-top: 0px;
 	}
 	.navbar .navbar-brand {
-		width: auto;
+		width: auto;		
 	}
 	.navbar:after {
 		display: none;
