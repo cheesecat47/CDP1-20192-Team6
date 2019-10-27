@@ -19,11 +19,7 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/tooplate-main.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/2-2-selling.css">
-<!--
-Tooplate 2114 Pixie
-https://www.tooplate.com/view/2114-pixie
--->
+    <link rel="stylesheet" href="assets/css/devjy.css">
   </head>
 
   <body>
@@ -151,11 +147,17 @@ https://www.tooplate.com/view/2114-pixie
 
 
     <!-- Additional Scripts -->
-    <script src="assets/js/2-2-selling.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/owl.js"></script>
     <script src="assets/js/isotope.js"></script>
-
+    
+    <script src="assets/js/devjy.js"></script>
+    <script>
+      (function () {
+        fill_selling_list('selling-list');
+        fill_selling_list('request-list');
+      })();
+    </script>
 
     <script language = "text/Javascript"> 
       cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
