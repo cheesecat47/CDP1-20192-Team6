@@ -75,11 +75,11 @@ function fill_selling_list(listname) {
     // iterate to get each information in product list
     for (acc_idx in account['selling']) {
         idx = account.selling[acc_idx]
-        
-        var innerbox = document.createElement('div');
-        innerbox.id = idx;
-        innerbox.className = 'item new col-md-4';
+
         if (listname == 'selling-list') {
+            var innerbox = document.createElement('div');
+            innerbox.id = idx;
+            innerbox.className = 'item new col-md-4';
             innerbox.innerHTML = `
                 <a href="single-product.html">
                 <div class="featured-item">
@@ -89,9 +89,13 @@ function fill_selling_list(listname) {
                 </div>
                 </a>
                 `;
+                div_list.appendChild(innerbox);
         }
         else if (listname == 'request-list') {
             if (obj[idx].status == '배송중' || obj[idx].status == '발송대기') {
+                var innerbox = document.createElement('div');
+                innerbox.id = idx;
+                innerbox.className = 'item new col-md-4';
                 innerbox.innerHTML = `
                     <a href="single-product.html">
                     <div class="featured-item">
@@ -101,8 +105,8 @@ function fill_selling_list(listname) {
                     </div>
                     </a>
                     `;
+                div_list.appendChild(innerbox);
             }
         }
-        div_list.appendChild(innerbox);
     }
 }
