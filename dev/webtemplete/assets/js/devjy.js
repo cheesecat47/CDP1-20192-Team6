@@ -29,6 +29,31 @@ $(function () {
     btn_regist_item.click(function (event) {
         alert("상품 등록 버튼 클릭, 2-2-1 페이지로 이동");
     });
+
+    // handle regist-item btn
+    var btn_order_item = $('#order_item_btn');
+    btn_order_item.click(function (event) {
+        var order_data = document.order_form;
+        console.log(order_data)
+        var buyer_name = order_data.buyer_name.value;
+        var buyer_address = order_data.buyer_address.value;
+        var buyer_contact = order_data.buyer_contact.value;
+        
+        if (!buyer_name){
+            alert("이름을 입력해주세요.");
+            return;
+        }
+        if (!buyer_address){
+            alert("주소를 입력해주세요.");
+            return;
+        }
+        if (!buyer_contact){
+            alert("연락처를 입력해주세요.");
+            return;
+        }
+
+        alert(buyer_name + '\n' + buyer_address + '\n' + buyer_contact);
+    });
 });
 
 
@@ -78,38 +103,26 @@ function fill_list(listname) {
         for (acc_idx in account['selling']) {
             idx = account.selling[acc_idx]
 
-            if (listname == 'selling-list') {
-                var innerbox = document.createElement('div');
-                innerbox.id = idx;
-                innerbox.className = 'item new col-md-4';
-                innerbox.innerHTML = `
-                    <a href="single-product.html">
-                    <div class="featured-item">
-                        <img src="assets/images/${obj[idx].img}" alt="No image">
-                        <h4>${obj[idx].name}</h4>
-                        <h6>Price: ${obj[idx].price}</h6>
-                    </div>
-                    </a>
-                    `;
-                div_list.appendChild(innerbox);
-            }
-            else if (listname == 'request-list') {
-                if (obj[idx].status == '배송중' || obj[idx].status == '발송대기') {
-                    var innerbox = document.createElement('div');
-                    innerbox.id = idx;
-                    innerbox.className = 'item new col-md-4';
-                    innerbox.innerHTML = `
-                        <a href="single-product.html">
-                        <div class="featured-item">
-                            <img src="assets/images/${obj[idx].img}" alt="No image">
-                            <h4>${obj[idx].name}</h4>
-                            <h6>Status: ${obj[idx].status}</h6>
-                        </div>
-                        </a>
-                        `;
-                    div_list.appendChild(innerbox);
+            if (listname == 'request-list') {
+                if (obj[idx].status == '판매중' || obj[idx].status == '판매완료') {
+                    continue;
                 }
             }
+
+            var innerbox = document.createElement('div');
+            innerbox.id = idx;
+            innerbox.className = 'item new col-md-4';
+            innerbox.innerHTML = `
+                <a href="single-product.html">
+                <div class="featured-item">
+                    <img src="assets/images/${obj[idx].img}" alt="No image">
+                    <h4>${obj[idx].name}</h4>
+                    <h6>Price: ${obj[idx].price}</h6>
+                    <h6>Status: ${obj[idx].status}</h6>
+                </div>
+                </a>
+                `;
+            div_list.appendChild(innerbox);
         }
     } // if selling or request list
     else if (listname == 'wish-list') {

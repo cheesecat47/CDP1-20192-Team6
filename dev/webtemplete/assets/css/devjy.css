@@ -3,10 +3,14 @@
 }
 
 .featured-item {
-    min-width: 300px;
-    min-height: 300px;
+    min-width: 200px;
+    min-height: 350px;
 }
 
 .section-heading h6 {
     text-align: right;
+}
+
+#map img {
+    width: 100%;
 }
