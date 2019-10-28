@@ -2,7 +2,7 @@
 var product_json = `{
     "1": {"img": "product-01.jpg","name": "연한 청바지","price": "Ξ1", "seller": "cheesecat47", "status": "배송중"},
     "2": {"img": "product-02.jpg","name": "짙은 청바지","price": "Ξ1.5", "seller": "cheesecat47", "status": "판매중"},
-    "3": {"img": "product-03.jpg","name": "조끼 뒷모습","price": "Ξ2", "seller": "atg0831", "status": "판매중"},
+    "3": {"img": "product-03.jpg","name": "조끼 뒷모습","price": "Ξ2", "seller": "atg0831", "status": "판매완료"},
     "4": {"img": "product-04.jpg","name": "하늘 나는 신발","price": "Ξ2.5", "seller": "cheesecat47", "status": "발송대기"},
     "5": {"img": "product-05.jpg","name": "귀 두 개 가방","price": "Ξ3", "seller": "atg0831", "status": "판매중"},
     "6": {"img": "product-06.jpg","name": "토끼 귀 가방","price": "Ξ3.5", "seller": "cheesecat47", "status": "판매중"},
@@ -15,7 +15,8 @@ var product_json = `{
 var my_account = `{
     "id": "cheesecat47",
     "selling": [1,2,4,6,8],
-    "wish": []
+    "wish": [5, 9],
+    "buy_history": [3]
 }`;
 
 // main function
@@ -64,7 +65,7 @@ function fill_nav() {
 }
 
 
-function fill_selling_list(listname) {
+function fill_list(listname) {
     // read json data
     account = JSON.parse(my_account);
     obj = JSON.parse(product_json);
@@ -72,27 +73,12 @@ function fill_selling_list(listname) {
     // insert selling items list
     var div_list = document.getElementById(listname);
 
-    // iterate to get each information in product list
-    for (acc_idx in account['selling']) {
-        idx = account.selling[acc_idx]
+    if (listname == 'selling-list' || listname == 'request-list') {
+        // iterate to get each information in product list
+        for (acc_idx in account['selling']) {
+            idx = account.selling[acc_idx]
 
-        if (listname == 'selling-list') {
-            var innerbox = document.createElement('div');
-            innerbox.id = idx;
-            innerbox.className = 'item new col-md-4';
-            innerbox.innerHTML = `
-                <a href="single-product.html">
-                <div class="featured-item">
-                    <img src="assets/images/${obj[idx].img}" alt="No image">
-                    <h4>${obj[idx].name}</h4>
-                    <h6>${obj[idx].price}</h6>
-                </div>
-                </a>
-                `;
-                div_list.appendChild(innerbox);
-        }
-        else if (listname == 'request-list') {
-            if (obj[idx].status == '배송중' || obj[idx].status == '발송대기') {
+            if (listname == 'selling-list') {
                 var innerbox = document.createElement('div');
                 innerbox.id = idx;
                 innerbox.className = 'item new col-md-4';
@@ -101,12 +87,69 @@ function fill_selling_list(listname) {
                     <div class="featured-item">
                         <img src="assets/images/${obj[idx].img}" alt="No image">
                         <h4>${obj[idx].name}</h4>
-                        <h6>${obj[idx].status}</h6>
+                        <h6>Price: ${obj[idx].price}</h6>
                     </div>
                     </a>
                     `;
                 div_list.appendChild(innerbox);
             }
+            else if (listname == 'request-list') {
+                if (obj[idx].status == '배송중' || obj[idx].status == '발송대기') {
+                    var innerbox = document.createElement('div');
+                    innerbox.id = idx;
+                    innerbox.className = 'item new col-md-4';
+                    innerbox.innerHTML = `
+                        <a href="single-product.html">
+                        <div class="featured-item">
+                            <img src="assets/images/${obj[idx].img}" alt="No image">
+                            <h4>${obj[idx].name}</h4>
+                            <h6>Status: ${obj[idx].status}</h6>
+                        </div>
+                        </a>
+                        `;
+                    div_list.appendChild(innerbox);
+                }
+            }
         }
-    }
+    } // if selling or request list
+    else if (listname == 'wish-list') {
+        for (acc_idx in account['wish']) {
+            idx = account.wish[acc_idx]
+
+            var innerbox = document.createElement('div');
+            innerbox.id = idx;
+            innerbox.className = 'item new col-md-4';
+            innerbox.innerHTML = `
+                <a href="single-product.html">
+                <div class="featured-item">
+                    <img src="assets/images/${obj[idx].img}" alt="No image">
+                    <h4>${obj[idx].name}</h4>
+                    <h6>Seller: ${obj[idx].seller}</h6>
+                    <h6>Price: ${obj[idx].price}</h6>
+                </div>
+                </a>
+                `;
+            div_list.appendChild(innerbox);
+        }
+    } // else if wish list
+    else if (listname == 'buy-history-list') {
+        for (acc_idx in account['buy_history']) {
+            idx = account.wish[acc_idx]
+
+            var innerbox = document.createElement('div');
+            innerbox.id = idx;
+            innerbox.className = 'item new col-md-4';
+            innerbox.innerHTML = `
+                <a href="single-product.html">
+                <div class="featured-item">
+                    <img src="assets/images/${obj[idx].img}" alt="No image">
+                    <h4>${obj[idx].name}</h4>
+                    <h6>Seller: ${obj[idx].seller}</h6>
+                    <h6>Price: ${obj[idx].price}</h6>
+                </div>
+                </a>
+                `;
+            div_list.appendChild(innerbox);
+        }
+    } // else if buy history list
 }
