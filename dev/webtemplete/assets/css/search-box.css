@@ -32,3 +32,11 @@
     cursor: pointer;
     font-size: 20px;
   }
+
+  .wrap{
+    /* width:30%; */
+    position: absolute;
+    
+     transform: translate(0%, 50%); 
+  }
+  
