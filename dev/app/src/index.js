@@ -2,6 +2,12 @@ import Web3 from "web3";
 // import "./app.css";
 import ecommerceStoreArtifact from "../../build/contracts/EcommerceStore.json";
 
+var ipfsClient = require('ipfs-http-client')
+var ipfs = ipfsClient({host:'localhost', port :'5001', 
+  protocol: 'http'
+})
+var reader;
+
 const App = {
   web3: null,
   account: null,
@@ -43,15 +49,24 @@ const App = {
         event.preventDefault();
       });
 
-      $("#buy-now").submit(function(event) {
+      $('#product-image').change(function(event){
+        const file = event.target.files[0]
+        reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
+      });
+
+      $("#buy-now").submit(function (event) {
         $("#msg").hide();
         var sendAmount = $("#buy-now-price").val();
         var productId = $("#product-id").val();
-        App.instance.methods.buy(productId).send({value: sendAmount, from: App.account})
+        App.instance.methods.buy(productId).send({
+          value: sendAmount,
+          from: App.account
+        })
         $("#msg").show();
         $("#msg").html("You have successfully purchased the product!");
         event.preventDefault();
-       });
+      });
     } catch (error) {
       console.error("Could not connect to contract or chain.");
     }
@@ -62,12 +77,42 @@ const App = {
       addProductToStore
     } = this.instance.methods;
 
-    addProductToStore(product["product-name"], product["product-category"], "imageLink",
-      "descLink", Date.parse(product["product-start-time"]) / 1000,
+    let imageId = await this.saveImageOnIpfs(reader);
+    let descId = await this.saveTextBlobOnIpfs(product["product-description"]);
+    addProductToStore(product["product-name"], product["product-category"], imageId,
+      descId, Date.parse(product["product-start-time"]) / 1000,
       this.web3.utils.toWei(product["product-price"], 'ether'), product["product-condition"]).send({
       from: this.account,
       gas: 4700000
     });
+  },
+
+  saveImageOnIpfs: async function (reader) {
+    return new Promise(function (resolve, reject) {
+      const buffer = Buffer.from(reader.result);
+      ipfs.add(buffer)
+        .then((response) => {
+          console.log(response)
+          resolve(response[0].hash);
+        }).catch((err) => {
+          console.error(err)
+          reject(err);
+        })
+    })
+  },
+
+  saveTextBlobOnIpfs: async function (blob) {
+    return new Promise(function (resolve, reject) {
+      const descBuffer = Buffer.from(blob, 'utf-8');
+      ipfs.add(descBuffer)
+        .then((response) => {
+          console.log(response)
+          resolve(response[0].hash);
+        }).catch((err) => {
+          console.error(err)
+          reject(err);
+        })
+    })
   },
 
   renderStore: async function () {
@@ -87,7 +132,7 @@ const App = {
     var f = await getProduct(index).call()
     let node = $("<div/>");
     node.addClass("col-sm-3 text-center col-margin-bottom-1 product");
-	node.append("<img src= 'http://ipfs.io/ipfs/"+f[3]+"' />")
+    node.append("<img src= 'http://ipfs.io/ipfs/" + f[3] + "' />")
     node.append("<div class='title'>" + f[1] + "</div>");
     node.append("<div> Price: " + displayPrice(f[6]) + "</div>");
     node.append("<a href='product.html?id=" + f[0] + "'>Details </div>");
@@ -104,9 +149,14 @@ const App = {
     } = this.instance.methods;
     var p = await getProduct(productId).call();
     $("#product-name").html(p[1]);
-    $("#product-price").html(displayPrice(p[6])); 
+    $("#product-image").html("<img src= 'http://ipfs.io/ipfs/" + p[3] + "' />");
+    $("#product-price").html(displayPrice(p[6]));
     $("#product-id").val(p[0]);
     $("#buy-now-price").val((p[6]));
+    var desFile = await ipfs.cat(p[4]);
+    var content = desFile.toString();
+    console.log(content);
+    $("#product-desc").html("<div>" + content + "</div>");// 내판단
   }
 };
 
