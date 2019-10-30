@@ -21,6 +21,15 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/flex-slider.css">
     <link rel="stylesheet" href="assets/css/devjy.css">
+    
+    <script type="text/javascript">
+function display_alert()
+  {
+  alert("OK!!")
+  }
+</script>
+
+
   </head>
 
   <body>
@@ -47,7 +56,7 @@
           <div class="col-md-12">
             <div class="section-heading">
               <div class="line-dec"></div>
-              <h1>배송 정보 입력</h1>
+              <h1>배송 정보 </h1>
             </div>
           </div>
           <div class="col-md-6">
@@ -67,27 +76,32 @@
           </div>
           <div class="col-md-6">
             <div class="right-content">
-              <h4>Item name: iPhone XR</h4>
-              <h6>Price: Ξ5.5</h6>
-              <h6>Seller: atg0831</h6>
-              <br>
-              <form name="order_form" action="" method="get">
+			 <div class="down-content">
+              <h4>상품명: 여성27인치/제푼상태 우수/정품</h4>
+              <h6>가격: 7,200원</h6>
+              <h6>판매자: atg0831</h6>
+               </div>
+			  <br>
+              <form name="deliver_form" action="" method="get">  <!--  -->
                 <table>
                   <tr>
-                    <td><label for="buyer_name">Name:</label></td>
-                    <td><input name="buyer_name" type="text" class="buyer_name_text" id="buyer_name"><br></td>
+                    <td><label for="buyer_name">이름:</label></td>
+                  <!--  <td><input name="buyer_name" type="text" class="buyer_name_text" id="buyer_name"><br></td> -->
+				    <td> 1380gta  </td>
                   </tr>
                   <tr>
-                    <td><label for="buyer_address">Address:</label></td>
-                    <td><input name="buyer_address" type="text" class="buyer_address_text" id="buyer_address"><br></td>
+                    <td><label for="buyer_address">주스:</label></td>
+                <td> 대구 북구 경북대하교 it-5호관 </td>
+				<!--  <td><input name="buyer_address" type="text" class="buyer_address_text" id="buyer_address"><br></td>  -->
                   </tr>
                   <tr>
-                    <td><label for="buyer_contact">Phone #:</label></td>
-                    <td><input name="buyer_contact" type="text" class="buyer_contact_text" id="buyer_contact"><br></td>
+                    <td><label for="buyer_contact">연락처 #:</label></td>
+                  <td> 010-123-456  </td>
+				  <!--  <td><input name="buyer_contact" type="text" class="buyer_contact_text" id="buyer_contact"><br></td>   -->
                   </tr>
                 </table>
                 <br>
-                <input type="button" id="order_item_btn" class="button" value="Order Now!">
+                <input type="button" id="deliver_item_btn" class="button" value="발송완료!" onclick="display_alert()" >
               </form>
               <!-- <div class="down-content">
                 <div class="categories">
