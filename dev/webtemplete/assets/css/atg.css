@@ -1,0 +1,140 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+  }
+  
+  .searchTerm {
+    width: 240px;
+    
+    border: 3px solid #00B4CC;
+    border-right: none;
+    padding: 5px;
+    height: 36px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+  }
+  
+  .searchTerm:focus{
+    color: #00B4CC;
+  }
+  
+  .searchButton {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #00B4CC;
+    background: #00B4CC;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+  .wrap{
+    /* width:30%; */
+    position: absolute;
+    
+     transform: translate(300%, 110%); 
+  }
+  
+  .featured-page #link-purchase {
+    margin-top: 15px;
+    text-align: right;
+  }
+
+  #link-purchase .btn-purchase_list{
+    /* float:left; */
+    position: relative; 
+    color: #1e1e1e;
+    border: none;
+    width: 100px;
+    font-size: 20px;
+    font-weight: 750;
+    background-color: transparent;
+    /* position: absolute; */
+     transform: translate(-380%,-20%); 
+    outline:none;
+    margin-left: 10px;
+  }
+
+
+  #link-purchase .btn-basket_list{
+    /* float:left; */
+     position: relative; 
+    color: #1e1e1e;
+    border: none;
+    width: 100px;
+    font-size: 20px;
+    font-weight: 750;
+    background-color: transparent;
+    /* position: absolute; */
+     transform: translate(-380%,-20%); 
+    outline:none;
+    margin-left: 10px;
+  }
+
+
+  #link-purchase .btn-item_list{
+    /* float:left; */
+    position: relative; 
+    color: #1e1e1e;
+    border: none;
+    width: 100px;
+    font-size: 20px;
+    font-weight: 750;
+    background-color: transparent;
+    /* position: absolute; */
+     transform: translate(-380%,-20%); 
+    outline:none;
+    margin-left: 10px;
+  }
+
+
+  /* Featured Page Style */
+.featured-page {
+	margin-top: 130px;
+	margin-bottom: 40px;
+}
+.featured-page .section-heading {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.featured-page #filters-1 {
+	margin-top: 15px;
+	text-align: right;
+}
+
+
+.featured .featured-item {
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+.featured .featured-item h4 {
+	transition: all 0.5s;
+}
+.featured .featured-item:hover h4 {
+	color: #3a8bcd;
+}
+#filter button {
+	outline: none;
+}
+#filter .btn-primary.focus,
+.btn-primary:focus {
+	color: #3a8bcd!important;
+	box-shadow: none!important;
+}
+#filters-1 .btn-primary {
+	margin-left:0px;
+	color: #1e1e1e;
+	border: none;
+	width: 100px;
+	font-size: 15px;
+	font-weight: 700;
+	background-color: transparent;
+	position: relative;
+	transform: translate(780%,-20%);
+	margin-right: 5px;
+}

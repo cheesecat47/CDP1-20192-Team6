@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/tooplate-main.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/search-box.css">
+    <link rel="stylesheet" href="assets/css/atg.css">
 
 <!--
 Tooplate 2114 Pixie
@@ -53,15 +53,15 @@ https://www.tooplate.com/view/2114-pixie
               <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="2-1-1.html">물품목록
+              <a class="nav-link" href="2-1.html">구매하기
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="2-1-2.html">장바구니</a>
+              <a class="nav-link" href="2-2.html">판매하기</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="2-1-3.html">구매내역</a>
+              <a class="nav-link" href="2-3.html">문의하기</a>
             </li>
           </ul>
         </div>
@@ -73,32 +73,34 @@ https://www.tooplate.com/view/2114-pixie
     <div class="featured-page">
       <div class="container">
         <div class="row">
- <div class="section-heading">
-          <div class="line-dec"></div>
-</div>
-            <div id="filters" class="button-group">
-              <button class="btn btn-primary" data-filter="*">가격순</button>
-              <button class="btn btn-primary" data-filter=".new">등록일자순</button>
-              <button class="btn btn-primary" data-filter=".low">상품등급순</button>
-         
-            
+          <div class="section-heading">
+           <div class="line-dec"></div>
           </div>
-       
-        <div class="wrap">
+
+          <div class="wrap">
             <div class="search">
-               <input type="text" class="searchTerm" placeholder="What are you looking for?">
-               <button type="submit" class="searchButton">
-                 <i class="fa fa-search"></i>
-              </button>
-            </div>
-         </div>
-       
+              <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton">
+                  <i class="fa fa-search"></i>
+                </button>
             </div>
           </div>
-          
+          <div id="filters-1" class="button-group">
+            <button class="btn btn-primary" data-filter="*">가격순</button>
+            <button class="btn btn-primary" data-filter=".new">등록일자순</button>
+            <button class="btn btn-primary" data-filter=".low">상품등급순</button>
+          </div>
+             
+          <div id="link-purchase" class="button-purchase">
+            <button class="btn btn-item_list" onclick="location.href='2-1-1물품목록.html'">물품목록</button>
+            <button class="btn btn-basket_list"  onclick="location.href='2-1-2장바구니.html'">장바구니</button>
+            <button class="btn btn-purchase_list"  onclick="location.href='2-1-3구매내역.html'">구매내역</button>
+          </div>      
         </div>
-      </div>
-    </div>
+       </div>
+          
+     </div>
+    
   
     <div class="featured container no-gutter">
 

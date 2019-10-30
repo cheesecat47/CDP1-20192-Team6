@@ -368,6 +368,8 @@ a {
 	margin-top: 15px;
 	text-align: right;
 }
+
+
 .featured .featured-item {
 	margin-bottom: 30px;
 	text-decoration: none;
@@ -395,7 +397,7 @@ a {
 	font-weight: 700;
 	background-color: transparent;
 	position: relative;
-	transform: translate(300%,0);
+	transform: translate(780%,-20%);
 	margin-right: 5px;
 }
 /* Isotope Transitions
@@ -733,6 +735,9 @@ a {
 	.featured-page #filters {
 		text-align: right;
 	} 
+	.featured-page #filters-1 {
+		text-align: right;
+	} 
 	.single-product .right-content {
 		margin-top: 30px;
 	}
@@ -762,6 +767,10 @@ a {
 		margin-top: 20px;
 	}
 	.featured-page #filters {
+		margin-top: 15px;
+		text-align: left;
+	} 
+	.featured-page #filters-1 {
 		margin-top: 15px;
 		text-align: left;
 	} 
