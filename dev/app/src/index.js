@@ -63,9 +63,32 @@ const App = {
           value: sendAmount,
           from: App.account
         })
-        $("#msg").show();
         $("#msg").html("You have successfully purchased the product!");
+        $("#msg").show();
         event.preventDefault();
+      });
+      
+      $("#release-funds").click(function (event) {
+        const {
+          releaseAmountToSeller
+        } = App.instance.methods;
+        let productId = new URLSearchParams(window.location.search).get('id');
+        console.log(productId);
+        $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
+        $("#msg").show();
+        releaseAmountToSeller(productId).send({from: App.account, gas: 4700000 }).then(window.location.reload());
+      });
+      
+
+      $("#refund-funds").click(function (event){
+        const {
+          refundAmountToBuyer
+        } = App.instance.methods;
+        let productId = new URLSearchParams(window.location.search).get('id');
+        console.lof(productId);
+        $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
+        $("#msg").show();
+        refundAmountToBuyer(productId).send({from: App.account, gas:4700000}).then(window.location.reload());
       });
     } catch (error) {
       console.error("Could not connect to contract or chain.");
@@ -76,7 +99,6 @@ const App = {
     const {
       addProductToStore
     } = this.instance.methods;
-
     let imageId = await this.saveImageOnIpfs(reader);
     let descId = await this.saveTextBlobOnIpfs(product["product-description"]);
     addProductToStore(product["product-name"], product["product-category"], imageId,
@@ -119,6 +141,7 @@ const App = {
     const {
       productIndex
     } = this.instance.methods;
+    
     var count = await productIndex().call();
     for (var i = 1; i <= count; i++) {
       this.renderProduct(i);
@@ -136,7 +159,7 @@ const App = {
     node.append("<div class='title'>" + f[1] + "</div>");
     node.append("<div> Price: " + displayPrice(f[6]) + "</div>");
     node.append("<a href='product.html?id=" + f[0] + "'>Details </div>");
-    if (f[8] === '0x0000000000000000000000000000000000000000') {
+    if (f[8] == '0x0000000000000000000000000000000000000000') {
       $("#product-list").append(node);
     } else {
       $("#product-purchased").append(node);
@@ -145,7 +168,8 @@ const App = {
 
   renderProductDetails: async function (productId) {
     const {
-      getProduct
+      getProduct,
+      escrowInfo
     } = this.instance.methods;
     var p = await getProduct(productId).call();
     $("#product-name").html(p[1]);
@@ -155,8 +179,19 @@ const App = {
     $("#buy-now-price").val((p[6]));
     var desFile = await ipfs.cat(p[4]);
     var content = desFile.toString();
-    console.log(content);
-    $("#product-desc").html("<div>" + content + "</div>");// 내판단
+    $("#product-desc").html("<div>" + content + "</div>");
+    if(p[8] == '0x0000000000000000000000000000000000000000') {
+      $("#escrow-info").hide();
+    }
+    else{
+      $("#buy-now").hide();
+      const i = await escrowInfo(productId).call();
+      $("#buyer").html('Buyer : ' + i[0]);
+      $("#seller").html('seller : ' + i[1]);
+      $("#arbiter").html('arbiter : ' + i[2]);
+      $("#release-count").html(i[4]);
+      $("#refund-count").html(i[5]);
+    }
   }
 };
 

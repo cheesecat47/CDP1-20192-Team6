@@ -1,4 +1,5 @@
 pragma solidity >= 0.4 .0 < 0.6 .0;
+import "contracts/Escrow.sol";
 contract EcommerceStore {
 
     enum ProductCondition {
@@ -7,13 +8,11 @@ contract EcommerceStore {
     }
 
     uint public productIndex;
-
     address public arbiter;
-
     mapping(address => mapping(uint => Product)) stores;
     mapping(uint => address payable) productIdInStore;
-
     mapping(uint => address) productEscrow;
+
     struct Product {
         uint id;
         string name;
@@ -26,8 +25,9 @@ contract EcommerceStore {
         address buyer;
     }
 
-    constructor() public {
+    constructor(address _arbiter) public {
         productIndex = 0;
+        arbiter = _arbiter;
     }
 
     function addProductToStore(string memory _name, string memory _category, string memory _imageLink,
@@ -54,5 +54,19 @@ contract EcommerceStore {
         require(msg.value >= product.price);
         product.buyer = msg.sender;
         stores[productIdInStore[_productId]][_productId] = product;
+        Escrow escrow = (new Escrow).value(msg.value)(_productId, msg.sender, productIdInStore[_productId], arbiter);
+        productEscrow[_productId] = address(escrow);
+    }
+
+    function escrowInfo(uint _productId) view public returns(address, address, address, bool, uint, uint) {
+        return Escrow(productEscrow[_productId]).escrowInfo();
+    }
+
+    function releaseAmountToSeller(uint _productId) public {
+        return Escrow(productEscrow[_productId]).releaseAmountToSeller(msg.sender);
+    }
+
+    function refundAmountToBuyer(uint _productId) public {
+        return Escrow(productEscrow[_productId]).refundAmountToBuyer(msg.sender);
     }
 }
