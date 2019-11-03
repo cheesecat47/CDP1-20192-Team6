@@ -73,7 +73,7 @@ function fill_nav() {
                     <a class="nav-link" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">구매하기</a>
+                    <a class="nav-link" href="2-1-buy.html">구매하기</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="2-2-selling.html">판매하기
