@@ -1,0 +1,32 @@
+{
+    "1": {
+        "img": "product-01.jpg",
+        "name": "Proin vel ligula",
+        "price": "$15.00"
+    },
+    "2": {
+        "img": "product-02.jpg",
+        "name": "Erat odio rhoncus",
+        "price": "$25.00"
+    },
+    "3": {
+        "img": "product-03.jpg",
+        "name": "Integer vel turpis",
+        "price": "$25.00"
+    },
+    "4": {
+        "img": "product-04.jpg",
+        "name": "Sed purus quam",
+        "price": "$25.00"
+    },
+    "5": {
+        "img": "product-05.jpg",
+        "name": "Morbi aliquet",
+        "price": "$55.00"
+    },
+    "6": {
+        "img": "product-06.jpg",
+        "name": "Urna ac diam",
+        "price": "$65.00"
+    }
+}

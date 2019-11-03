@@ -5,7 +5,7 @@ Tooplate 2114 Pixie
 https://www.tooplate.com/view/2114-pixie
 
 */
-
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 body {
 	font-family: 'Roboto', sans-serif;
 	transition: all 0.5s;
@@ -55,6 +55,10 @@ a {
 	color: #1e1e1e;
 	margin-top: 15px;
 }
+/* search box style*/
+
+/*Resize the wrap to see the search bar change!*/
+
 
 /* Pre Header Style */
 #pre-header {
@@ -364,6 +368,8 @@ a {
 	margin-top: 15px;
 	text-align: right;
 }
+
+
 .featured .featured-item {
 	margin-bottom: 30px;
 	text-decoration: none;
@@ -383,11 +389,16 @@ a {
 	box-shadow: none!important;
 }
 #filters .btn-primary {
+	margin-left:0px;
 	color: #1e1e1e;
 	border: none;
+	width: 100px;
 	font-size: 15px;
 	font-weight: 700;
 	background-color: transparent;
+	position: relative;
+	transform: translate(780%,-20%);
+	margin-right: 5px;
 }
 /* Isotope Transitions
 ------------------------------- */
@@ -724,6 +735,9 @@ a {
 	.featured-page #filters {
 		text-align: right;
 	} 
+	.featured-page #filters-1 {
+		text-align: right;
+	} 
 	.single-product .right-content {
 		margin-top: 30px;
 	}
@@ -753,6 +767,10 @@ a {
 		margin-top: 20px;
 	}
 	.featured-page #filters {
+		margin-top: 15px;
+		text-align: left;
+	} 
+	.featured-page #filters-1 {
 		margin-top: 15px;
 		text-align: left;
 	} 
