@@ -41,9 +41,13 @@ jQuery( document ).ready(function( $ ) {
 		    // filter items on button click
 		  $('#filters').on( 'click', 'button', function() {
 		    var filterValue = $(this).attr('data-filter');
-		    $container.isotope({ filter: filterValue });
+			$container.isotope({ filter: filterValue });
 		});
 
+		  $('#filters-1').on( 'click', 'button', function() {
+			var filterValue = $(this).attr('data-filter');
+			$container.isotope({ filter: filterValue });
+		});
 
 		$('#carousel').flexslider({
 		    animation: "slide",

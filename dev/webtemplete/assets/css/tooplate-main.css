@@ -5,7 +5,7 @@ Tooplate 2114 Pixie
 https://www.tooplate.com/view/2114-pixie
 
 */
-
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 body {
 	font-family: 'Roboto', sans-serif;
 	transition: all 0.5s;
@@ -55,6 +55,10 @@ a {
 	color: #1e1e1e;
 	margin-top: 15px;
 }
+/* search box style*/
+
+/*Resize the wrap to see the search bar change!*/
+
 
 /* Pre Header Style */
 #pre-header {
@@ -69,11 +73,16 @@ a {
 }
 
 /* Header Style */
-.navbar .navbar-brand {
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:visited{
 	text-align: center;
 	width: 100%;
 	position: relative;
-	padding: 25px 0px;
+	padding: 20px 0px;
+	font-weight: bold;
+	color: #3d8bcd;
+	font-size: 30px;	
 }
 .bg-dark {
 	background-color: #fff!important;
@@ -285,10 +294,13 @@ a {
 	list-style: none;
 	display: inline-block;
 }
-.footer .logo img {
+.footer .logo{
 	max-width: 100%;
 	margin-top: 60px;
 	margin-bottom: 40px;
+	color: #3d8bcd;
+	font-size: 30px;
+	font-weight: 550;
 }
 .footer .footer-menu {
 	margin-bottom: 40px;
@@ -356,6 +368,8 @@ a {
 	margin-top: 15px;
 	text-align: right;
 }
+
+
 .featured .featured-item {
 	margin-bottom: 30px;
 	text-decoration: none;
@@ -375,11 +389,16 @@ a {
 	box-shadow: none!important;
 }
 #filters .btn-primary {
+	margin-left:0px;
 	color: #1e1e1e;
 	border: none;
+	width: 100px;
 	font-size: 15px;
 	font-weight: 700;
 	background-color: transparent;
+	position: relative;
+	transform: translate(780%,-20%);
+	margin-right: 5px;
 }
 /* Isotope Transitions
 ------------------------------- */
@@ -690,7 +709,7 @@ a {
 		margin-top: 0px;
 	}
 	.navbar .navbar-brand {
-		width: auto;
+		width: auto;		
 	}
 	.navbar:after {
 		display: none;
@@ -714,6 +733,9 @@ a {
 		padding: 15px 0px;
 	}
 	.featured-page #filters {
+		text-align: right;
+	} 
+	.featured-page #filters-1 {
 		text-align: right;
 	} 
 	.single-product .right-content {
@@ -745,6 +767,10 @@ a {
 		margin-top: 20px;
 	}
 	.featured-page #filters {
+		margin-top: 15px;
+		text-align: left;
+	} 
+	.featured-page #filters-1 {
 		margin-top: 15px;
 		text-align: left;
 	} 
