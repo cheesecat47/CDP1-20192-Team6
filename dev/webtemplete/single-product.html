@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
-    <title>Pixie - Product Detail</title>
+    <title>상품정보</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,6 +24,15 @@
 Tooplate 2114 Pixie
 https://www.tooplate.com/view/2114-pixie
 -->
+   <script type="text/javascript">
+function display_alert()
+  {
+  alert("개발중")
+  }
+</script>
+   
+  
+  
   </head>
 
   <body>
@@ -33,7 +42,7 @@ https://www.tooplate.com/view/2114-pixie
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <span>Suspendisse laoreet magna vel diam lobortis imperdiet</span>
+            <span>team 6</span>
           </div>
         </div>
       </div>
@@ -42,7 +51,7 @@ https://www.tooplate.com/view/2114-pixie
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
       <div class="container">
-        <a class="navbar-brand" href="#"><img src="assets/images/header-logo.png" alt=""></a>
+     <!--   <a class="navbar-brand" href="#"><img src="assets/images/header-logo.png" alt=""></a>  -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -75,7 +84,7 @@ https://www.tooplate.com/view/2114-pixie
           <div class="col-md-12">
             <div class="section-heading">
               <div class="line-dec"></div>
-              <h1>Single Product</h1>
+              <h1>상품 정보</h1>
             </div>
           </div>
           <div class="col-md-6">
@@ -118,21 +127,25 @@ https://www.tooplate.com/view/2114-pixie
           </div>
           <div class="col-md-6">
             <div class="right-content">
-              <h4>Single Product Name</h4>
-              <h6>$55.00</h6>
-              <p>Proin commodo, diam a ultricies sagittis, erat odio rhoncus metus, eu feugiat lorem lacus aliquet arcu. Curabitur in gravida nisi, non placerat nibh. Praesent sit amet diam ultrices, commodo turpis id, dignissim leo. Suspendisse mauris massa, porttitor non fermentum vel, ullamcorper scelerisque velit. </p>
-              <span>7 left on stock</span>
+              <h4>여성27인치/제푼상태 우수/정품</h4>
+              <h6>7,200원</h6>
+              <p>사이즈는 국내 27인치 입니다. 소재는 면98% 스판2%입니다 .제푼상태 우수합니다 배송비는 착불 2500원 입니다.값을 깎지 말고 감사합니다 </p>
+              <span>상태:구매가능</span>  <!--상태 거래중 구매가능 거래--> 
               <form action="" method="get">
-                <label for="quantity">Quantity:</label>
+                <label for="quantity">구매수량:</label>
                 <input name="quantity" type="quantity" class="quantity-text" id="quantity" 
                 	onfocus="if(this.value == '1') { this.value = ''; }" 
                     onBlur="if(this.value == '') { this.value = '1';}"
                     value="1">
-                <input type="submit" class="button" value="Order Now!">
+				
+               <!-- <input type="submit" class="button"  value="주문하기" > error--> 
+                    <a href="2-1-2-1-buy-request.html" class="button">주문하기</a>
+				 <input type="submit" class="button" value="장바구니 추가" onclick="display_alert()">
+
               </form>
               <div class="down-content">
                 <div class="categories">
-                  <h6>Category: <span><a href="#">Pants</a>,<a href="#">Women</a>,<a href="#">Lifestyle</a></span></h6>
+                  <h6>카테고리: <span><a href="#">청바지</a>,<a href="#">여성의류</a>,<a href="#">패션</a></span></h6>
                 </div>
                 <div class="share">
                   <h6>Share: <span><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="#"><i class="fa fa-twitter"></i></a></span></h6>
@@ -153,7 +166,7 @@ https://www.tooplate.com/view/2114-pixie
           <div class="col-md-12">
             <div class="section-heading">
               <div class="line-dec"></div>
-              <h1>You May Also Like</h1>
+              <h1>다른 상품</h1>
             </div>
           </div>
           <div class="col-md-12">
@@ -161,64 +174,64 @@ https://www.tooplate.com/view/2114-pixie
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-01.jpg" alt="Item 1">
-                  <h4>Proin vel ligula</h4>
-                  <h6>$15.00</h6>
+                  <h4>청바지 </h4>
+                  <h6>7,000원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-02.jpg" alt="Item 2">
-                  <h4>Erat odio rhoncus</h4>
-                  <h6>$25.00</h6>
+                  <h4>청바지</h4>
+                  <h6>6,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-03.jpg" alt="Item 3">
-                  <h4>Integer vel turpis</h4>
-                  <h6>$35.00</h6>
+                  <h4>보온 조끼</h4>
+                  <h6>8,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-04.jpg" alt="Item 4">
-                  <h4>Sed purus quam</h4>
-                  <h6>$45.00</h6>
+                  <h4>귀여운 가방</h4>
+                  <h6>4,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-05.jpg" alt="Item 5">
-                  <h4>Morbi aliquet</h4>
-                  <h6>$55.00</h6>
+                  <h4>Morbi 가방</h4>
+                  <h6>5,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-06.jpg" alt="Item 6">
-                  <h4>Urna ac diam</h4>
-                  <h6>$65.00</h6>
+                  <h4>Urna 산발</h4>
+                  <h6>6,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-04.jpg" alt="Item 7">
-                  <h4>Proin eget imperdiet</h4>
-                  <h6>$75.00</h6>
+                  <h4>Proin 가방</h4>
+                  <h6>7,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-05.jpg" alt="Item 8">
-                  <h4>Nullam risus nisl</h4>
-                  <h6>$85.00</h6>
+                  <h4>Nullam 가방</h4>
+                  <h6>8,500원</h6>
                 </div>
               </a>
               <a href="single-product.html">
                 <div class="featured-item">
                   <img src="assets/images/item-06.jpg" alt="Item 9">
-                  <h4>Cras tempus</h4>
-                  <h6>$95.00</h6>
+                  <h4>Cras 산발</h4>
+                  <h6>9,500원</h6>
                 </div>
               </a>
             </div>
@@ -229,82 +242,11 @@ https://www.tooplate.com/view/2114-pixie
     <!-- Similar Ends Here -->
 
 
-    <!-- Subscribe Form Starts Here -->
-    <div class="subscribe-form">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="section-heading">
-              <div class="line-dec"></div>
-              <h1>Subscribe on PIXIE now!</h1>
-            </div>
-          </div>
-          <div class="col-md-8 offset-md-2">
-            <div class="main-content">
-              <p>Godard four dollar toast prism, authentic heirloom raw denim messenger bag gochujang put a bird on it celiac readymade vice.</p>
-              <div class="container">
-                <form id="subscribe" action="" method="get">
-                  <div class="row">
-                    <div class="col-md-7">
-                      <fieldset>
-                        <input name="email" type="text" class="form-control" id="email" 
-                        onfocus="if(this.value == 'Your Email...') { this.value = ''; }" 
-                    	onBlur="if(this.value == '') { this.value = 'Your Email...';}"
-                    	value="Your Email..." required="">
-                      </fieldset>
-                    </div>
-                    <div class="col-md-5">
-                      <fieldset>
-                        <button type="submit" id="form-submit" class="button">Subscribe Now!</button>
-                      </fieldset>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Subscribe Form Ends Here -->
+  
 
 
     
-    <!-- Footer Starts Here -->
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="logo">
-              <img src="assets/images/header-logo.png" alt="">
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="footer-menu">
-              <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">How It Works ?</a></li>
-                <li><a href="#">Contact Us</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="social-icons">
-              <ul>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                <li><a href="#"><i class="fa fa-rss"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Footer Ends Here -->
-
+    
 
     <!-- Sub Footer Starts Here -->
     <div class="sub-footer">
@@ -312,9 +254,7 @@ https://www.tooplate.com/view/2114-pixie
         <div class="row">
           <div class="col-md-12">
             <div class="copyright-text">
-              <p>Copyright &copy; 2019 Company Name 
-                
-                - Design: <a rel="nofollow" href="https://www.facebook.com/tooplate">Tooplate</a></p>
+              <p>Copyright &copy; 2019 CDP1 - Team 6</p>
             </div>
           </div>
         </div>
