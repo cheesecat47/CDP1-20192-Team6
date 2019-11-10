@@ -1,9 +1,9 @@
 // product list in JSON format
 var product_json = `{
-    "1": {"img": "product-01.jpg","name": "연한 청바지","price": "Ξ1", "seller": "cheesecat47", "status": "배송중"},
-    "2": {"img": "product-02.jpg","name": "짙은 청바지","price": "Ξ1.5", "seller": "cheesecat47", "status": "판매중"},
+    "1": {"img": "iphone8.jpeg","name": "iPhone 8","price": "Ξ5", "seller": "cheesecat47", "status": "배송중"},
+    "2": {"img": "iphone11.jpeg","name": "iPhone 11","price": "Ξ6.5", "seller": "cheesecat47", "status": "판매중"},
     "3": {"img": "product-03.jpg","name": "조끼 뒷모습","price": "Ξ2", "seller": "atg0831", "status": "판매완료"},
-    "4": {"img": "product-04.jpg","name": "하늘 나는 신발","price": "Ξ2.5", "seller": "cheesecat47", "status": "발송대기"},
+    "4": {"img": "iphoneXR.jpeg","name": "iPhone XR","price": "Ξ5.5", "seller": "cheesecat47", "status": "발송대기"},
     "5": {"img": "product-05.jpg","name": "귀 두 개 가방","price": "Ξ3", "seller": "atg0831", "status": "판매중"},
     "6": {"img": "product-06.jpg","name": "토끼 귀 가방","price": "Ξ3.5", "seller": "cheesecat47", "status": "판매중"},
     "7": {"img": "iphone8.jpeg","name": "iPhone 8","price": "Ξ5", "seller": "atg0831", "status": "판매중"},
