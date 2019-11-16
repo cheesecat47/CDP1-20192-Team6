@@ -10,9 +10,13 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
+      { from: "./src/assets", to: "assets"},
+      { from: "./src/vendor", to: "vendor"},
       { from: "./src/index.html", to: "index.html" },
-      { from: "./src/list-item.html", to: "list-item.html" },
-      { from: "./src/product.html", to: "product.html" }
+      { from: "./src/addProduct.html", to: "addProduct.html" },
+      { from: "./src/buy.html", to: "buy.html" },
+      { from: "./src/sell.html", to: "sell.html" },
+      { from: "./src/product-detail.html", to: "product-detail.html"}
   ]),
   ],
   devServer: { contentBase: path.join(__dirname, "dist"), compress: true, port: 8081},

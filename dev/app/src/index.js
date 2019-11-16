@@ -3,7 +3,9 @@ import Web3 from "web3";
 import ecommerceStoreArtifact from "../../build/contracts/EcommerceStore.json";
 
 var ipfsClient = require('ipfs-http-client')
-var ipfs = ipfsClient({host:'localhost', port :'5001', 
+var ipfs = ipfsClient({
+  host: 'localhost',
+  port: '5001',
   protocol: 'http'
 })
 var reader;
@@ -26,17 +28,51 @@ const App = {
         ecommerceStoreArtifact.abi,
         deployedNetwork.address,
       );
-
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
 
-      if ($("#product-details").length > 0) {
+
+      // Different rendering depeding on which page
+      var currentFileName = document.URL.substring(document.URL.lastIndexOf("/") + 1, document.URL.lastIndexOf("/") + 30);
+      console.log(currentFileName);
+
+      // index.html
+      if (currentFileName == "index.html") {
+        this.renderProducts("onDisplay");
+      }
+      // buy.html
+      else if (currentFileName == "buy.html" || currentFileName == "buy.html#") {
+        // $(".featured-item").css("display", "none");
+        var listStatus = "onDisplay";
+        var pageNum = 1;
+        
+        this.renderProducts("onDisplay", 1);
+
+        $("#productList").click(function (event) {
+          listStatus = "onDisplay";
+          App.renderProducts(listStatus, 1);
+        });
+        $("#productPurchased").click(function (event) {
+          listStatus = "purchased";
+          App.renderProducts(listStatus, 1);
+        });
+
+        $(".page-number").click(function (event) {
+          // App.renderProducts("onDisPlay", $(this).text());
+          $(".current-page").removeClass("current-page");
+          $(this).addClass("current-page");
+          pageNum = parseInt($(this).text());
+          App.renderProducts(listStatus, pageNum);
+        })
+      }
+      // product-detail.html
+      else if (currentFileName == "product-detail.html") {
         let productId = new URLSearchParams(window.location.search).get('id');
         this.renderProductDetails(productId);
-      } else {
-        this.renderStore();
       }
+
+
       $("#add-item-to-store").submit(function (event) {
         const req = $("#add-item-to-store").serialize();
         let params = JSON.parse('{"' + req.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
@@ -49,7 +85,7 @@ const App = {
         event.preventDefault();
       });
 
-      $('#product-image').change(function(event){
+      $('#product-image').change(function (event) {
         const file = event.target.files[0]
         reader = new window.FileReader()
         reader.readAsArrayBuffer(file)
@@ -67,7 +103,7 @@ const App = {
         $("#msg").show();
         event.preventDefault();
       });
-      
+
       $("#release-funds").click(function (event) {
         const {
           releaseAmountToSeller
@@ -76,11 +112,14 @@ const App = {
         console.log(productId);
         $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
         $("#msg").show();
-        releaseAmountToSeller(productId).send({from: App.account, gas: 4700000 }).then(window.location.reload());
+        releaseAmountToSeller(productId).send({
+          from: App.account,
+          gas: 4700000
+        }).then(window.location.reload());
       });
-      
 
-      $("#refund-funds").click(function (event){
+
+      $("#refund-funds").click(function (event) {
         const {
           refundAmountToBuyer
         } = App.instance.methods;
@@ -88,7 +127,10 @@ const App = {
         console.lof(productId);
         $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
         $("#msg").show();
-        refundAmountToBuyer(productId).send({from: App.account, gas:4700000}).then(window.location.reload());
+        refundAmountToBuyer(productId).send({
+          from: App.account,
+          gas: 4700000
+        }).then(window.location.reload());
       });
     } catch (error) {
       console.error("Could not connect to contract or chain.");
@@ -137,32 +179,38 @@ const App = {
     })
   },
 
-  renderStore: async function () {
+  renderProducts: async function (storeName, pageNum) {
     const {
+      getProduct,
       productIndex
     } = this.instance.methods;
-    
-    var count = await productIndex().call();
-    for (var i = 1; i <= count; i++) {
-      this.renderProduct(i);
-    }
-  },
 
-  renderProduct: async function (index) {
-    const {
-      getProduct
-    } = this.instance.methods;
-    var f = await getProduct(index).call()
-    let node = $("<div/>");
-    node.addClass("col-sm-3 text-center col-margin-bottom-1 product");
-    node.append("<img src= 'http://ipfs.io/ipfs/" + f[3] + "' />")
-    node.append("<div class='title'>" + f[1] + "</div>");
-    node.append("<div> Price: " + displayPrice(f[6]) + "</div>");
-    node.append("<a href='product.html?id=" + f[0] + "'>Details </div>");
-    if (f[8] == '0x0000000000000000000000000000000000000000') {
-      $("#product-list").append(node);
-    } else {
-      $("#product-purchased").append(node);
+    var count = await productIndex().call();
+    var itemNumber;
+    var product;
+    var eachItem;
+    $(".featured-item").css("display","none");
+
+    if (storeName == "onDisplay") {
+      for (var i = (pageNum-1) * 6 + 1 ; i <= pageNum +5 && i <=  count; i++) {
+        product = await getProduct(i).call();
+        eachItem = "#item-" + ((i-1) % 6);
+        $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
+        $(eachItem).children("h4").text(product[1]);
+        $(eachItem).children("h6").text(displayPrice(product[6]));
+        $(eachItem).css("display", "");
+      }
+    } else if (storeName == "puchased") {
+      for (var i = 1; i <= count; i++) {
+        if (f[8] != '0x0000000000000000000000000000000000000000') {
+            product = await getProduct(i).call();
+            eachItem = "#item-" + i;
+            $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
+            $(eachItem).children("h4").text(product[1]);
+            $(eachItem).children("h6").text(displayPrice(product[6]));
+            $(eachItem).css("display", "");
+          }
+        }
     }
   },
 
@@ -180,10 +228,9 @@ const App = {
     var desFile = await ipfs.cat(p[4]);
     var content = desFile.toString();
     $("#product-desc").html("<div>" + content + "</div>");
-    if(p[8] == '0x0000000000000000000000000000000000000000') {
+    if (p[8] == '0x0000000000000000000000000000000000000000') {
       $("#escrow-info").hide();
-    }
-    else{
+    } else {
       $("#buy-now").hide();
       const i = await escrowInfo(productId).call();
       $("#buyer").html('Buyer : ' + i[0]);
