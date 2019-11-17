@@ -75,7 +75,7 @@ function fill_nav() {
                 <li class="nav-item">
                     <a class="nav-link" href="buy.html">구매하기</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="sell.html">판매하기
                         <span class="sr-only">(current)</span>
                     </a>
@@ -90,79 +90,79 @@ function fill_nav() {
 }
 
 
-function fill_list(listname) {
-    // read json data
-    account = JSON.parse(my_account);
-    obj = JSON.parse(product_json);
+// function fill_list(listname) {
+//     // read json data
+//     account = JSON.parse(my_account);
+//     obj = JSON.parse(product_json);
 
-    // insert selling items list
-    var div_list = document.getElementById(listname);
+//     // insert selling items list
+//     var div_list = document.getElementById(listname);
 
-    if (listname == 'selling-list' || listname == 'request-list') {
-        // iterate to get each information in product list
-        for (acc_idx in account['selling']) {
-            idx = account.selling[acc_idx]
+//     if (listname == 'selling-list' || listname == 'request-list') {
+//         // iterate to get each information in product list
+//         for (acc_idx in account['selling']) {
+//             idx = account.selling[acc_idx]
 
-            if (listname == 'request-list') {
-                if (obj[idx].status == '판매중' || obj[idx].status == '판매완료') {
-                    continue;
-                }
-            }
+//             if (listname == 'request-list') {
+//                 if (obj[idx].status == '판매중' || obj[idx].status == '판매완료') {
+//                     continue;
+//                 }
+//             }
 
-            var innerbox = document.createElement('div');
-            innerbox.id = idx;
-            innerbox.className = 'item new col-md-4';
-            innerbox.innerHTML = `
-                <a href="single-product.html">
-                <div class="featured-item">
-                    <img src="assets/images/${obj[idx].img}" alt="No image">
-                    <h4>${obj[idx].name}</h4>
-                    <h6>Price: ${obj[idx].price}</h6>
-                    <h6>Status: ${obj[idx].status}</h6>
-                </div>
-                </a>
-                `;
-            div_list.appendChild(innerbox);
-        }
-    } // if selling or request list
-    else if (listname == 'wish-list') {
-        for (acc_idx in account['wish']) {
-            idx = account.wish[acc_idx]
+//             var innerbox = document.createElement('div');
+//             innerbox.id = idx;
+//             innerbox.className = 'item new col-md-4';
+//             innerbox.innerHTML = `
+//                 <a href="single-product.html">
+//                 <div class="featured-item">
+//                     <img src="assets/images/${obj[idx].img}" alt="No image">
+//                     <h4>${obj[idx].name}</h4>
+//                     <h6>Price: ${obj[idx].price}</h6>
+//                     <h6>Status: ${obj[idx].status}</h6>
+//                 </div>
+//                 </a>
+//                 `;
+//             div_list.appendChild(innerbox);
+//         }
+//     } // if selling or request list
+//     else if (listname == 'wish-list') {
+//         for (acc_idx in account['wish']) {
+//             idx = account.wish[acc_idx]
 
-            var innerbox = document.createElement('div');
-            innerbox.id = idx;
-            innerbox.className = 'item new col-md-4';
-            innerbox.innerHTML = `
-                <a href="single-product.html">
-                <div class="featured-item">
-                    <img src="assets/images/${obj[idx].img}" alt="No image">
-                    <h4>${obj[idx].name}</h4>
-                    <h6>Seller: ${obj[idx].seller}</h6>
-                    <h6>Price: ${obj[idx].price}</h6>
-                </div>
-                </a>
-                `;
-            div_list.appendChild(innerbox);
-        }
-    } // else if wish list
-    else if (listname == 'buy-history-list') {
-        for (acc_idx in account['buy_history']) {
-            idx = account.wish[acc_idx]
+//             var innerbox = document.createElement('div');
+//             innerbox.id = idx;
+//             innerbox.className = 'item new col-md-4';
+//             innerbox.innerHTML = `
+//                 <a href="single-product.html">
+//                 <div class="featured-item">
+//                     <img src="assets/images/${obj[idx].img}" alt="No image">
+//                     <h4>${obj[idx].name}</h4>
+//                     <h6>Seller: ${obj[idx].seller}</h6>
+//                     <h6>Price: ${obj[idx].price}</h6>
+//                 </div>
+//                 </a>
+//                 `;
+//             div_list.appendChild(innerbox);
+//         }
+//     } // else if wish list
+//     else if (listname == 'buy-history-list') {
+//         for (acc_idx in account['buy_history']) {
+//             idx = account.wish[acc_idx]
 
-            var innerbox = document.createElement('div');
-            innerbox.id = idx;
-            innerbox.className = 'item new col-md-4';
-            innerbox.innerHTML = `
-                <a href="single-product.html">
-                <div class="featured-item">
-                    <img src="assets/images/${obj[idx].img}" alt="No image">
-                    <h4>${obj[idx].name}</h4>
-                    <h6>Seller: ${obj[idx].seller}</h6>
-                    <h6>Price: ${obj[idx].price}</h6>
-                </div>
-                </a>
-                `;
-            div_list.appendChild(innerbox);
-        }
-    } // else if buy history list
-}
+//             var innerbox = document.createElement('div');
+//             innerbox.id = idx;
+//             innerbox.className = 'item new col-md-4';
+//             innerbox.innerHTML = `
+//                 <a href="single-product.html">
+//                 <div class="featured-item">
+//                     <img src="assets/images/${obj[idx].img}" alt="No image">
+//                     <h4>${obj[idx].name}</h4>
+//                     <h6>Seller: ${obj[idx].seller}</h6>
+//                     <h6>Price: ${obj[idx].price}</h6>
+//                 </div>
+//                 </a>
+//                 `;
+//             div_list.appendChild(innerbox);
+//         }
+//     } // else if buy history list
+// }

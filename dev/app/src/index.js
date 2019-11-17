@@ -38,15 +38,14 @@ const App = {
       console.log(currentFileName);
 
       // index.html
-      if (currentFileName == "index.html") {
+      if (currentFileName.includes("index.html")) {
         this.renderProducts("onDisplay");
       }
       // buy.html
-      else if (currentFileName == "buy.html" || currentFileName == "buy.html#") {
-        // $(".featured-item").css("display", "none");
+      else if (currentFileName.includes("buy.html")) {
         var listStatus = "onDisplay";
         var pageNum = 1;
-        
+
         this.renderProducts("onDisplay", 1);
 
         $("#productList").click(function (event) {
@@ -57,9 +56,7 @@ const App = {
           listStatus = "purchased";
           App.renderProducts(listStatus, 1);
         });
-
         $(".page-number").click(function (event) {
-          // App.renderProducts("onDisPlay", $(this).text());
           $(".current-page").removeClass("current-page");
           $(this).addClass("current-page");
           pageNum = parseInt($(this).text());
@@ -67,11 +64,33 @@ const App = {
         })
       }
       // product-detail.html
-      else if (currentFileName == "product-detail.html") {
+      else if (currentFileName.includes("product-detail.html")) {
         let productId = new URLSearchParams(window.location.search).get('id');
+        console.log(productId);
         this.renderProductDetails(productId);
+        $("#product-id").attr("value", productId);
+      }
+      // buy-info.html
+      else if (currentFileName.includes("buy-info.html")){
+        let productId = new URLSearchParams(window.location.search).get('product-id');
+        let quantity = new URLSearchParams(window.location.search).get('quantity');
+        console.log(productId);
+        console.log(quantity);
       }
 
+      $("#buy-now").submit(function (event) {
+        console.log("hi");
+        $("#msg").hide();
+        var sendAmount = $("#buy-now-price").val();
+        var productId = $("#product-id").val();
+        App.instance.methods.buy(productId).send({
+          value: sendAmount,
+          from: App.account
+        })
+        $("#msg").html("You have successfully purchased the product!");
+        $("#msg").show();
+        event.preventDefault();
+      });
 
       $("#add-item-to-store").submit(function (event) {
         const req = $("#add-item-to-store").serialize();
@@ -91,18 +110,6 @@ const App = {
         reader.readAsArrayBuffer(file)
       });
 
-      $("#buy-now").submit(function (event) {
-        $("#msg").hide();
-        var sendAmount = $("#buy-now-price").val();
-        var productId = $("#product-id").val();
-        App.instance.methods.buy(productId).send({
-          value: sendAmount,
-          from: App.account
-        })
-        $("#msg").html("You have successfully purchased the product!");
-        $("#msg").show();
-        event.preventDefault();
-      });
 
       $("#release-funds").click(function (event) {
         const {
@@ -189,12 +196,13 @@ const App = {
     var itemNumber;
     var product;
     var eachItem;
-    $(".featured-item").css("display","none");
-
+    $(".featured-item").css("display", "none");
+    console.log(count);
     if (storeName == "onDisplay") {
-      for (var i = (pageNum-1) * 6 + 1 ; i <= pageNum +5 && i <=  count; i++) {
+      for (var i = (pageNum - 1) * 6 + 1; i <= (pageNum - 1) * 6 + 6 && i <= count; i++) {
         product = await getProduct(i).call();
-        eachItem = "#item-" + ((i-1) % 6);
+        eachItem = "#item-" + ((i - 1) % 6);
+        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0]);
         $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
         $(eachItem).children("h4").text(product[1]);
         $(eachItem).children("h6").text(displayPrice(product[6]));
@@ -203,31 +211,57 @@ const App = {
     } else if (storeName == "puchased") {
       for (var i = 1; i <= count; i++) {
         if (f[8] != '0x0000000000000000000000000000000000000000') {
-            product = await getProduct(i).call();
-            eachItem = "#item-" + i;
-            $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
-            $(eachItem).children("h4").text(product[1]);
-            $(eachItem).children("h6").text(displayPrice(product[6]));
-            $(eachItem).css("display", "");
-          }
+          product = await getProduct(i).call();
+          eachItem = "#item-" + i;
+          $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
+          $(eachItem).children("h4").text(product[1]);
+          $(eachItem).children("h6").text(displayPrice(product[6]));
+          $(eachItem).css("display", "");
         }
+      }
     }
   },
 
   renderProductDetails: async function (productId) {
     const {
       getProduct,
-      escrowInfo
+      escrowInfo,
+      productIndex
     } = this.instance.methods;
     var p = await getProduct(productId).call();
-    $("#product-name").html(p[1]);
-    $("#product-image").html("<img src= 'http://ipfs.io/ipfs/" + p[3] + "' />");
+    var count = await productIndex().call();
+    $("#product-name").text(p[1]);
+    $("#product-image").attr("src", "http://ipfs.io/ipfs/" + p[3]);
     $("#product-price").html(displayPrice(p[6]));
     $("#product-id").val(p[0]);
-    $("#buy-now-price").val((p[6]));
-    var desFile = await ipfs.cat(p[4]);
-    var content = desFile.toString();
-    $("#product-desc").html("<div>" + content + "</div>");
+    // $("#buy-now-price").val((p[6]));
+    if (p[8] == '0x0000000000000000000000000000000000000000') {
+      $("#product-status").text("상태 : 구매가능");
+    } else {
+      $("#product-status").text("상태 : 거래중");
+    }
+    // var desFile = await ipfs.cat(p[4]);
+
+    // var content = desFile.toString();
+    // $("#product-desc").text(content);
+    var j = 0
+    for (var i = 1; i <= count; i++) {
+      var otherProduct = await getProduct(i).call();
+      if (p[0] != i) {
+        // $(".owl-carousel").trigger('remove.owl.carousel',[i]).trigger('refresh.owl.carousel');
+        $(".owl-carousel").trigger('add.owl.carousel', [$("<a href='product-detail.html'>\
+                                                            <div class='featured-item'>\
+                                                              <img src='http://ipfs.io/ipfs/" + otherProduct[3] + "' alt='Item 1'>\
+                                                              <h4>" + otherProduct[1] + "</h4> \
+                                                              <h6>" + displayPrice(otherProduct[6]) + "</h6> \
+                                                            </div> \
+                                                          </a>\
+                                                      ")]).trigger('refresh.owl.carousel');
+        j++;
+      }
+    }
+
+    //escrow
     if (p[8] == '0x0000000000000000000000000000000000000000') {
       $("#escrow-info").hide();
     } else {
