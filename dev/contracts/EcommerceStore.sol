@@ -25,6 +25,8 @@ contract EcommerceStore {
         address buyer;
     }
 
+    event NewProduct(uint _productId, string _name, string _category, string _imageLink, string _descLink, uint _startTime, uint _price, uint _productCondition, address payable _seller);
+    
     constructor(address _arbiter) public {
         productIndex = 0;
         arbiter = _arbiter;
@@ -37,6 +39,7 @@ contract EcommerceStore {
             _descLink, _startTime, _price, ProductCondition(_productCondition), address(0)); //change the left one 0 ->msg.sender
         stores[msg.sender][productIndex] = product;
         productIdInStore[productIndex] = msg.sender;
+        emit NewProduct(productIndex, _name, _category, _imageLink, _descLink, _startTime, _price, _productCondition, msg.sender);
     }
 
     function getProduct(uint _productId) public view returns(uint, string memory, string memory, string memory,

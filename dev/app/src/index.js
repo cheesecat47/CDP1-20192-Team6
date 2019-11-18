@@ -28,6 +28,7 @@ const App = {
         ecommerceStoreArtifact.abi,
         deployedNetwork.address,
       );
+
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
@@ -68,29 +69,30 @@ const App = {
         let productId = new URLSearchParams(window.location.search).get('id');
         console.log(productId);
         this.renderProductDetails(productId);
-        $("#product-id").attr("value", productId);
+        // $("#product-id").attr("value", productId);
       }
       // buy-info.html
-      else if (currentFileName.includes("buy-info.html")){
+      else if (currentFileName.includes("buy-info.html")) {
         let productId = new URLSearchParams(window.location.search).get('product-id');
         let quantity = new URLSearchParams(window.location.search).get('quantity');
         console.log(productId);
         console.log(quantity);
+        $("#buy-now").submit(function (event) {
+          console.log("hi");
+          $("#msg").hide();
+          var sendAmount = $("#buy-now-price").val();
+          var productId = $("#product-id").val();
+          App.instance.methods.buy(productId).send({
+            value: sendAmount,
+            from: App.account
+          })
+          $("#msg").html("You have successfully purchased the product!");
+          $("#msg").show();
+          event.preventDefault();
+        });
       }
 
-      $("#buy-now").submit(function (event) {
-        console.log("hi");
-        $("#msg").hide();
-        var sendAmount = $("#buy-now-price").val();
-        var productId = $("#product-id").val();
-        App.instance.methods.buy(productId).send({
-          value: sendAmount,
-          from: App.account
-        })
-        $("#msg").html("You have successfully purchased the product!");
-        $("#msg").show();
-        event.preventDefault();
-      });
+
 
       $("#add-item-to-store").submit(function (event) {
         const req = $("#add-item-to-store").serialize();
