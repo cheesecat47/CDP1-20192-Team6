@@ -22,16 +22,7 @@
     <link rel="stylesheet" href="assets/css/flex-slider.css">
     <link rel="stylesheet" href="assets/css/devjy.css">
     
-    <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js">
-// function display_alert()
-//   {
-//   alert("OK!!")
-//   }
 
-//   $(document).ready(function(){
-//                     $('#product-id').load('prodcut-detail.html #ab');
-//                     });
-// </script>
 
 
   </head>
@@ -68,33 +59,18 @@
           <div class="col-md-6">
             <div class="right-content">
 			 <div class="down-content">
-       
-                <input type="text" name="address" id="add" value="배송받을 주소를 입력해주세요">
-              <div id="product-id"></div>
-            
-              <h4>상품명: 여성27인치/제푼상태 우수/정품<script type="text/javscript" document.write(productId)></script>
-                <!-- 상품명 :<%=requiest.getParameter("product-name") %> -->
-              </h4>
-              <h6>가격: 7,200원</h6>
-              <h6>판매자: atg0831</h6>
-               </div>
-			  <br>
-              <form name="deliver_form"  id="buy-now" action="index.html" method="get">  <!--  -->
-                <table>
-                  
-                </table>
-                <br>
-                <input type="submit" id="deliver_item_btn" class="button" value="발송완료!" >
+          <div class="info" >
+            <div id="info-name">이름  : <input type="text" name="name" id="name" placeholder="이름을 입력해주세요" ></div>
+            <div id="info-add"> 주소   : <input type="text" name="address" id="add" placeholder="배송받을 주소를 입력해주세요" ></div>
+            <div id="info-tel">연락처 : <input type="text" name="call" id="tel" placeholder="연락처를 입력해주세요" ></div>
+          </div>
+          <br>
+              <form name="deliver_form"  id="buy-now" action="index.html" method="get">  <!--  -->            
+                  <input type="hidden" id="product-id" value="100">
+                  <input type="hidden" id="buy-now-price" value="110">
+                <input type="submit" id="deliver_item_btn" class="button" value="구매완료!" >
               </form>
-              <!-- <div class="down-content">
-                <div class="categories">
-                  <h6>Category: <span><a href="#">Pants</a>,<a href="#">Women</a>,<a href="#">Lifestyle</a></span></h6>
-                </div>
-                <div class="share">
-                  <h6>Share: <span><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="#"><i class="fa fa-twitter"></i></a></span></h6>
-                </div>
-              </div> -->
-            </div>
+        </div>
           </div>
         </div>
       </div>

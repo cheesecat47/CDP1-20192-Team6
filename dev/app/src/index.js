@@ -65,18 +65,30 @@ const App = {
       }
       // product-detail.html
       else if (currentFileName.includes("product-detail.html")) {
-        let productId = new URLSearchParams(window.location.search).get('email');
+        let productId = new URLSearchParams(window.location.search).get('id');
+        let productPrice = new URLSearchParams(window.location.search).get('price');
       
         console.log(productId);
-        this.renderProductDetails(productId);
-        $("#product-id").attr("value", productId);
+        console.log(productPrice);
+
+        this.renderProductDetails(productId); 
+        // $("#product-id").attr("value", productId);//method-get으론 id 못넘김
+        $("[name=product-id]").attr("value", productId); //method-get으로는 name이 넘어감
+        $("[name=product-price]").attr("value", productPrice); //method-get으로는 name이 넘어감
       }
+
       // buy-info.html
       else if (currentFileName.includes("buy-info.html")){
         let productId = new URLSearchParams(window.location.search).get('product-id');
         let quantity = new URLSearchParams(window.location.search).get('quantity');
+        let productPrice= new URLSearchParams(window.location.search).get('product-price');
+    
         console.log(productId);
         console.log(quantity);
+        console.log(productPrice);
+        this.renderProductDetails(productId);
+        $("#product-id").attr("value", productId);
+        $("#buy-now-price").attr("value", productPrice);
       }
 
       $("#buy-now").submit(function (event) {
@@ -203,13 +215,14 @@ const App = {
       for (var i = (pageNum - 1) * 6 + 1; i <= (pageNum - 1) * 6 + 6 && i <= count; i++) {
         product = await getProduct(i).call();
         eachItem = "#item-" + ((i - 1) % 6);
-        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0]);
+        // productid랑 productprice 값을 url로 둘다 넘겨줌
+        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0]+"&"+"price="+product[6]);
         $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
         $(eachItem).children("h4").text(product[1]);
         $(eachItem).children("h6").text(displayPrice(product[6]));
         $(eachItem).css("display", "");
       }
-    } else if (storeName == "puchased") {
+    } else if (storeName == "purchased") {
       for (var i = 1; i <= count; i++) {
         if (f[8] != '0x0000000000000000000000000000000000000000') {
           product = await getProduct(i).call();
@@ -231,9 +244,13 @@ const App = {
     } = this.instance.methods;
     var p = await getProduct(productId).call();
     var count = await productIndex().call();
-    $("#product-name").text(p[1]);
-    $("#product-image").attr("src", "http://ipfs.io/ipfs/" + p[3]);
-    $("#product-price").html(displayPrice(p[6]));
+    var eachItem;
+   // eachItem=
+   //  $(".featured-item").css("display");
+  //  renderProductDetails랑 같은 형식으로
+    $("#product-id").children("h4").text(p[1]);
+    $("#product-id").children("img").attr("src", "http://ipfs.io/ipfs/" + p[3]);
+    $("#product-id").children("h6").text(displayPrice(p[6]));
     $("#product-id").val(p[0]);
     // $("#buy-now-price").val((p[6]));
     if (p[8] == '0x0000000000000000000000000000000000000000') {
@@ -266,7 +283,7 @@ const App = {
     if (p[8] == '0x0000000000000000000000000000000000000000') {
       $("#escrow-info").hide();
     } else {
-      $("#buy-now").hide();
+     // $("#buy-now").hide(); 
       const i = await escrowInfo(productId).call();
       $("#buyer").html('Buyer : ' + i[0]);
       $("#seller").html('seller : ' + i[1]);

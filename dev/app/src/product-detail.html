@@ -67,10 +67,13 @@ console.log("Ddd")
           <div class="product-slider">
             <div id="slider" class="flexslider">
               <ul class="slides">
-                <li>
-                  <img src="assets/images/big-01.jpg" id="product-image" />
-                </li>
-              </ul>
+                <div class="featured-item" id="product-id">
+                  <img src="assets/images/loading.png" alt="">
+                  <h4>Urna ac diam</h4>
+                  <h6>$65.00</h6>
+                </div>
+
+                </ul>
             </div>
           </div>
         </div>
@@ -82,13 +85,14 @@ console.log("Ddd")
             <span id="product-status">상태:구매 가능</span>
             <!--상태 거래중 구매가능 거래-->
             <form action="buy-info.html" method="get">
-                <input name="product-id" type="id" id="product-id" value="물건ㅇㅇ">
-           
+                <input name="product-id" type="hidden" id="product-id" value="100">
+                <input name="product-price" type="hidden" id="product-price" value="1">
+                
               <label for="quantity">구매수량:</label>
-                <input name="quantity" type="quantity" class="quantity-text" id="quantity"
-                onfocus="if(this.value == '1') { this.value = ''; }" onBlur="if(this.value == '') { this.value = '1';}"
-                value="1"> 
-              <input type="submit" class="button" value="주문하기">
+                <input name="quantity" type="quantity" class="quantity-text" id="quantity" value="1"> 
+                <!-- onfocus="if(this.value == '1') { this.value = ''; }" onBlur="if(this.value == '') { this.value = '1';}" -->
+           
+                <input type="submit" class="button" value="주문하기">
             </form>
             <div class="down-content">
               <div class="categories">
@@ -101,8 +105,6 @@ console.log("Ddd")
     </div>
   </div>
   <!-- Single Page Ends Here -->
-
-  <div id="ab" value="ssss">Ipsum Dolor</div>
  
  
   <!-- Similar Starts Here -->
