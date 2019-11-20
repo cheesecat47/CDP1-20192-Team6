@@ -115,6 +115,7 @@
    * Run server.js on nodemon  on localhost:3000
 
    ```bash
+   ~/CDP1-20192-Team6/dev/app$ npm install -g nodemon
    ~/CDP1-20192-Team6/dev/app/src$ nodemon server.js
    ```
 

@@ -80,9 +80,6 @@ function fill_nav() {
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">고객센터</a>
-                </li>
             </ul>
         </div>
     `;
@@ -90,79 +87,87 @@ function fill_nav() {
 }
 
 
-// function fill_list(listname) {
-//     // read json data
-//     account = JSON.parse(my_account);
-//     obj = JSON.parse(product_json);
+function fill_list(listname) {
+    // insert selling items list
+    var div_list = document.getElementById(listname);
+    var sellerId = "0xa10f9eae66A1328e62034bFcc4786A8e3B35ED59"
 
-//     // insert selling items list
-//     var div_list = document.getElementById(listname);
+    if (listname == 'selling-list' || listname == 'request-list') {
+        // request to get data from db
+        $.ajax({
+            url: "http://localhost:3000/products?seller="+sellerId, // pass by URL
+            type: 'get',
+            contentType: "application/json; charset=utf-8",
+            data: {}
+        }).done(function(data){
+            console.log(data); //something to do
 
-//     if (listname == 'selling-list' || listname == 'request-list') {
-//         // iterate to get each information in product list
-//         for (acc_idx in account['selling']) {
-//             idx = account.selling[acc_idx]
+            // iterate to get each information in product list
+            for (itemIdx in data) {
+                // if (listname == 'request-list') {
+                //     if (obj[idx].status == '판매중' || obj[idx].status == '판매완료') {
+                //         continue;
+                //     }
+                // }
+                var item = data[itemIdx];
 
-//             if (listname == 'request-list') {
-//                 if (obj[idx].status == '판매중' || obj[idx].status == '판매완료') {
-//                     continue;
-//                 }
-//             }
+                console.log(item);
+                var innerbox = document.createElement('div');
+                innerbox.id = item['blockchainId'];
+                innerbox.className = 'item new col-md-4';
+                innerbox.innerHTML = `
+                    <a href="sell-info.html/?id=${item['blockchainId']}" style="min-height: 300px;">
+                    <div class="featured-item">
+                        <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
+                        <h4>${item['name']}</h4>
+                        <h6>Price: ${item['price']}</h6>
+                        <h6>Status: ${item['condition']}</h6>
+                    </div>
+                    </a>
+                    `;
+                div_list.appendChild(innerbox);
+            }
+        });
+    } // if selling or request list
+    
+    // else if (listname == 'wish-list') {
+    //     for (acc_idx in account['wish']) {
+    //         idx = account.wish[acc_idx]
 
-//             var innerbox = document.createElement('div');
-//             innerbox.id = idx;
-//             innerbox.className = 'item new col-md-4';
-//             innerbox.innerHTML = `
-//                 <a href="single-product.html">
-//                 <div class="featured-item">
-//                     <img src="assets/images/${obj[idx].img}" alt="No image">
-//                     <h4>${obj[idx].name}</h4>
-//                     <h6>Price: ${obj[idx].price}</h6>
-//                     <h6>Status: ${obj[idx].status}</h6>
-//                 </div>
-//                 </a>
-//                 `;
-//             div_list.appendChild(innerbox);
-//         }
-//     } // if selling or request list
-//     else if (listname == 'wish-list') {
-//         for (acc_idx in account['wish']) {
-//             idx = account.wish[acc_idx]
+    //         var innerbox = document.createElement('div');
+    //         innerbox.id = idx;
+    //         innerbox.className = 'item new col-md-4';
+    //         innerbox.innerHTML = `
+    //             <a href="single-product.html">
+    //             <div class="featured-item">
+    //                 <img src="assets/images/${obj[idx].img}" alt="No image">
+    //                 <h4>${obj[idx].name}</h4>
+    //                 <h6>Seller: ${obj[idx].seller}</h6>
+    //                 <h6>Price: ${obj[idx].price}</h6>
+    //             </div>
+    //             </a>
+    //             `;
+    //         div_list.appendChild(innerbox);
+    //     }
+    // } // else if wish list
+    // else if (listname == 'buy-history-list') {
+    //     for (acc_idx in account['buy_history']) {
+    //         idx = account.wish[acc_idx]
 
-//             var innerbox = document.createElement('div');
-//             innerbox.id = idx;
-//             innerbox.className = 'item new col-md-4';
-//             innerbox.innerHTML = `
-//                 <a href="single-product.html">
-//                 <div class="featured-item">
-//                     <img src="assets/images/${obj[idx].img}" alt="No image">
-//                     <h4>${obj[idx].name}</h4>
-//                     <h6>Seller: ${obj[idx].seller}</h6>
-//                     <h6>Price: ${obj[idx].price}</h6>
-//                 </div>
-//                 </a>
-//                 `;
-//             div_list.appendChild(innerbox);
-//         }
-//     } // else if wish list
-//     else if (listname == 'buy-history-list') {
-//         for (acc_idx in account['buy_history']) {
-//             idx = account.wish[acc_idx]
-
-//             var innerbox = document.createElement('div');
-//             innerbox.id = idx;
-//             innerbox.className = 'item new col-md-4';
-//             innerbox.innerHTML = `
-//                 <a href="single-product.html">
-//                 <div class="featured-item">
-//                     <img src="assets/images/${obj[idx].img}" alt="No image">
-//                     <h4>${obj[idx].name}</h4>
-//                     <h6>Seller: ${obj[idx].seller}</h6>
-//                     <h6>Price: ${obj[idx].price}</h6>
-//                 </div>
-//                 </a>
-//                 `;
-//             div_list.appendChild(innerbox);
-//         }
-//     } // else if buy history list
-// }
+    //         var innerbox = document.createElement('div');
+    //         innerbox.id = idx;
+    //         innerbox.className = 'item new col-md-4';
+    //         innerbox.innerHTML = `
+    //             <a href="single-product.html">
+    //             <div class="featured-item">
+    //                 <img src="assets/images/${obj[idx].img}" alt="No image">
+    //                 <h4>${obj[idx].name}</h4>
+    //                 <h6>Seller: ${obj[idx].seller}</h6>
+    //                 <h6>Price: ${obj[idx].price}</h6>
+    //             </div>
+    //             </a>
+    //             `;
+    //         div_list.appendChild(innerbox);
+    //     }
+    // } // else if buy history list
+}
