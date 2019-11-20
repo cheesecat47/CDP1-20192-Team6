@@ -92,6 +92,12 @@ const App = {
         });
       }
 
+      else if (currentFileName.includes("sell-info.html")) {
+        let blockchainId = new URLSearchParams(window.location.search).get('id');
+        console.log(blockchainId);
+        this.renderSellInfo(blockchainId);
+      }
+
 
 
       $("#add-item-to-store").submit(function (event) {
@@ -275,6 +281,19 @@ const App = {
       $("#release-count").html(i[4]);
       $("#refund-count").html(i[5]);
     }
+  },
+
+  renderSellInfo: async function (productId) {
+    const {
+      getProduct,
+      productIndex
+    } = this.instance.methods;
+    var p = await getProduct(productId).call();
+    // console.log(p);
+    $("#product-name").text(p[1]);
+    $("#product-image").attr("src", "http://ipfs.io/ipfs/" + p[3]);
+    $("#product-price").html('Price: ' + displayPrice(p[6]));
+    // $("#product-id").val(p[0]);
   }
 };
 

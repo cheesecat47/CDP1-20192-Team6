@@ -38,16 +38,16 @@ $(function () {
         var buyer_name = order_data.buyer_name.value;
         var buyer_address = order_data.buyer_address.value;
         var buyer_contact = order_data.buyer_contact.value;
-        
-        if (!buyer_name){
+
+        if (!buyer_name) {
             alert("이름을 입력해주세요.");
             return;
         }
-        if (!buyer_address){
+        if (!buyer_address) {
             alert("주소를 입력해주세요.");
             return;
         }
-        if (!buyer_contact){
+        if (!buyer_contact) {
             alert("연락처를 입력해주세요.");
             return;
         }
@@ -95,11 +95,11 @@ function fill_list(listname) {
     if (listname == 'selling-list' || listname == 'request-list') {
         // request to get data from db
         $.ajax({
-            url: "http://localhost:3000/products?seller="+sellerId, // pass by URL
+            url: "http://localhost:3000/products?seller=" + sellerId, // pass by URL
             type: 'get',
             contentType: "application/json; charset=utf-8",
             data: {}
-        }).done(function(data){
+        }).done(function (data) {
             console.log(data); //something to do
 
             // iterate to get each information in product list
@@ -116,7 +116,7 @@ function fill_list(listname) {
                 innerbox.id = item['blockchainId'];
                 innerbox.className = 'item new col-md-4';
                 innerbox.innerHTML = `
-                    <a href="sell-info.html/?id=${item['blockchainId']}" style="min-height: 300px;">
+                    <a href="sell-info.html?id=${item['blockchainId']}" style="min-height: 300px;">
                     <div class="featured-item">
                         <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
                         <h4>${item['name']}</h4>
@@ -129,7 +129,7 @@ function fill_list(listname) {
             }
         });
     } // if selling or request list
-    
+
     // else if (listname == 'wish-list') {
     //     for (acc_idx in account['wish']) {
     //         idx = account.wish[acc_idx]
