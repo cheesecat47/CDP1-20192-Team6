@@ -24,7 +24,14 @@
 </head>
 
 <body>
-
+<script>
+  let productId = new URLSearchParams(window.location.search).get('email');
+  // let quantity = new URLSearchParams(window.location.search).get('quantity');
+ console.log(productId);
+  // console.log(quantity);
+console.log("Ddd")
+</script>
+ 
   <!-- Pre Header -->
   <div id="pre-header">
     <div class="container">
@@ -69,17 +76,18 @@
         </div>
         <div class="col-md-6">
           <div class="right-content">
-            <h4 id="product-name"></h4>
+            <h4 id="product-name" value="sss"></h4>
             <h6 id="product-price"></h6>
             <p id="product-desc"></p>
-            <span id="product-status">상태:구매가능</span>
+            <span id="product-status">상태:구매 가능</span>
             <!--상태 거래중 구매가능 거래-->
             <form action="buy-info.html" method="get">
+                <input name="product-id" type="id" id="product-id" value="물건ㅇㅇ">
+           
               <label for="quantity">구매수량:</label>
-              <input type="hidden" id="product-id">
-              <input name="quantity" type="quantity" class="quantity-text" id="quantity"
+                <input name="quantity" type="quantity" class="quantity-text" id="quantity"
                 onfocus="if(this.value == '1') { this.value = ''; }" onBlur="if(this.value == '') { this.value = '1';}"
-                value="1">
+                value="1"> 
               <input type="submit" class="button" value="주문하기">
             </form>
             <div class="down-content">
@@ -94,7 +102,9 @@
   </div>
   <!-- Single Page Ends Here -->
 
-
+  <div id="ab" value="ssss">Ipsum Dolor</div>
+ 
+ 
   <!-- Similar Starts Here -->
   <div class="featured-items">
     <div class="container">

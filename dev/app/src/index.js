@@ -65,7 +65,8 @@ const App = {
       }
       // product-detail.html
       else if (currentFileName.includes("product-detail.html")) {
-        let productId = new URLSearchParams(window.location.search).get('id');
+        let productId = new URLSearchParams(window.location.search).get('email');
+      
         console.log(productId);
         this.renderProductDetails(productId);
         $("#product-id").attr("value", productId);

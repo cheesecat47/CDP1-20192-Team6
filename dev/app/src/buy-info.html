@@ -22,12 +22,16 @@
     <link rel="stylesheet" href="assets/css/flex-slider.css">
     <link rel="stylesheet" href="assets/css/devjy.css">
     
-    <script type="text/javascript">
-function display_alert()
-  {
-  alert("OK!!")
-  }
-</script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js">
+// function display_alert()
+//   {
+//   alert("OK!!")
+//   }
+
+//   $(document).ready(function(){
+//                     $('#product-id').load('prodcut-detail.html #ab');
+//                     });
+// </script>
 
 
   </head>
@@ -48,6 +52,8 @@ function display_alert()
   <!-- Navigation -->
   <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark static-top"></nav>
 
+
+
     <!-- Page Content -->
     <!-- Single Starts Here -->
     <div class="single-product">
@@ -60,48 +66,25 @@ function display_alert()
             </div>
           </div>
           <div class="col-md-6">
-            <div id="map">
-              <a href="https://map.kakao.com/?urlX=863867&urlY=667189&urlLevel=2&map_type=TYPE_MAP&map_hybrid=false" target="_blank">
-                <img src="https://map2.daum.net/map/mapservice?FORMAT=PNG&SCALE=1.25&MX=863867&MY=667189&S=0&IW=504&IH=310&LANG=0&COORDSTM=WCONGNAMUL&logo=kakao_logo" style="border:1px solid #ccc">
-              </a>
-              <div class="hide" style="overflow:hidden;padding:7px 11px;border:1px solid #dfdfdf;border-color:rgba(0,0,0,.1);border-radius:0 0 2px 2px;background-color:#f9f9f9;">
-                <strong style="float: left;">
-                  <img src="//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/logo_kakaomap.png" width="72" height="16" alt="카카오맵">
-                </strong>
-                <div style="float: right;position:relative">
-                  <a style="font-size:12px;text-decoration:none;float:left;height:15px;padding-top:1px;line-height:15px;color:#000" target="_blank" href="https://map.kakao.com/?urlX=863867&urlY=667189&urlLevel=2&map_type=TYPE_MAP&map_hybrid=false">지도 크게 보기</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
             <div class="right-content">
 			 <div class="down-content">
-              <h4>상품명: 여성27인치/제푼상태 우수/정품</h4>
+       
+                <input type="text" name="address" id="add" value="배송받을 주소를 입력해주세요">
+              <div id="product-id"></div>
+            
+              <h4>상품명: 여성27인치/제푼상태 우수/정품<script type="text/javscript" document.write(productId)></script>
+                <!-- 상품명 :<%=requiest.getParameter("product-name") %> -->
+              </h4>
               <h6>가격: 7,200원</h6>
               <h6>판매자: atg0831</h6>
                </div>
 			  <br>
-              <form name="deliver_form" action="" method="get">  <!--  -->
+              <form name="deliver_form"  id="buy-now" action="index.html" method="get">  <!--  -->
                 <table>
-                  <tr>
-                    <td><label for="buyer_name">이름:</label></td>
-                  <!--  <td><input name="buyer_name" type="text" class="buyer_name_text" id="buyer_name"><br></td> -->
-				    <td> 1380gta  </td>
-                  </tr>
-                  <tr>
-                    <td><label for="buyer_address">주스:</label></td>
-                <td> 대구 북구 경북대하교 it-5호관 </td>
-				<!--  <td><input name="buyer_address" type="text" class="buyer_address_text" id="buyer_address"><br></td>  -->
-                  </tr>
-                  <tr>
-                    <td><label for="buyer_contact">연락처 #:</label></td>
-                  <td> 010-123-456  </td>
-				  <!--  <td><input name="buyer_contact" type="text" class="buyer_contact_text" id="buyer_contact"><br></td>   -->
-                  </tr>
+                  
                 </table>
                 <br>
-                <input type="button" id="deliver_item_btn" class="button" value="발송완료!" onclick="display_alert()" >
+                <input type="submit" id="deliver_item_btn" class="button" value="발송완료!" >
               </form>
               <!-- <div class="down-content">
                 <div class="categories">
