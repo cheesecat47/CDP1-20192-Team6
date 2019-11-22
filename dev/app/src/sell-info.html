@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
-  <title>상품정보</title>
+  <title>블록체인 중고마켓, 안전한 거래</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,18 +20,23 @@
   <link rel="stylesheet" href="assets/css/tooplate-main.css">
   <link rel="stylesheet" href="assets/css/owl.css">
   <link rel="stylesheet" href="assets/css/flex-slider.css">
+  <link rel="stylesheet" href="assets/css/devjy.css">
 
+  <script type="text/javascript">
+    function display_alert() {
+      alert("발송 완료! 구매자가 배송 확인 시 이더가 지급됩니다.");
+    } 
+  </script>
 </head>
 
 <body>
 
- 
   <!-- Pre Header -->
   <div id="pre-header">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <span>단 하나뿐인 이더리움 블록체인 중고장터</span>
+          <span>Blockchain second hand market using Ethereum</span>
         </div>
       </div>
     </div>
@@ -40,13 +45,7 @@
   <!-- Navigation -->
   <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark static-top"></nav>
 
-
-
   <!-- Page Content -->
-
-  <div class="col-sm-12">
-    <div style="display: none;" class="alert alert-success text-center" id="msg"></div>
-  </div>
   <!-- Single Starts Here -->
   <div class="single-product">
     <div class="container">
@@ -54,70 +53,46 @@
         <div class="col-md-12">
           <div class="section-heading">
             <div class="line-dec"></div>
-            <h1>상품 정보</h1>
+            <h1>배송 정보 </h1>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="product-slider">
-            <div id="slider" class="flexslider">
-              <ul class="slides">
-                <div class="featured-item" id="product-id">
-                  <img src="assets/images/loading.png" alt="">
-                  <h4></h4>
-                  <h6></h6>
-                </div>
-                </ul>
-            </div>
+          <div id="map">
+            <img id="product-image" src="#" alt="No img.">
           </div>
         </div>
         <div class="col-md-6">
           <div class="right-content">
-            <h4 id="product-name" value="sss"></h4>
-            <h6 id="product-price"></h6>
-            <p id="product-desc"></p>
-            <span id="product-status">상태:구매 가능</span>
-            <!--상태 거래중 구매가능 거래-->
-            <form action="buy-info.html" method="get">
-                <input name="product-id" type="hidden" id="product-id" value="100">
-                <input name="product-price" type="hidden" id="product-price" value="1">
-                
-              <label for="quantity">구매수량:</label>
-                <input name="quantity" type="quantity" class="quantity-text" id="quantity" value="1"> 
-                <!-- onfocus="if(this.value == '1') { this.value = ''; }" onBlur="if(this.value == '') { this.value = '1';}" -->
-           
-                <input type="submit" class="button" value="주문하기">
-            </form>
             <div class="down-content">
-              <div class="categories">
-                <h6>카테고리: <span><a href="#">중고폰</a>,<a href="#">iPhone</a></h6>
-              </div>
+              <h4 id="product-name"></h4>
+              <h6 id="product-price"></h6>
+              <h6 id="product-seller"></h6>
             </div>
+            <form name="deliver_form" action="" method="get">
+              <table>
+                <tr>
+                  <td><label for="buyer_name">Name:</label></td>
+                  <td> Steven </td>
+                </tr>
+                <tr>
+                  <td><label for="buyer_address">Address:</label></td>
+                  <td> 대구 북구 경북대학교 it-5호관 </td>
+                </tr>
+                <tr>
+                  <td><label for="buyer_contact">Mobile:</label></td>
+                  <td> 010-123-456 </td>
+                </tr>
+              </table>
+              <input type="button" id="deliver_item_btn" class="btn btn-primary btn-block" value="발송완료!" onclick="display_alert()">
+            </form>
+            <br>
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- Single Page Ends Here -->
- 
- 
-  <!-- Similar Starts Here -->
-  <div class="featured-items">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="section-heading">
-            <div class="line-dec"></div>
-            <h1>같은 카테고리의 다른 상품</h1>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="owl-carousel owl-theme">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Similar Ends Here -->
+
 
   <!-- Sub Footer Starts Here -->
   <div class="sub-footer">
@@ -144,15 +119,16 @@
   <script src="assets/js/owl.js"></script>
   <script src="assets/js/isotope.js"></script>
   <script src="assets/js/flex-slider.js"></script>
-  <script src="assets/js/devjy.js"></script>
   <script src="index.js"></script>
+  <script src="assets/js/devjy.js"></script>
+
 
   <script language="text/Javascript">
     cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-    function clearField(t) { //declaring the array outside of the
-      if (!cleared[t.id]) { // function makes it static and global
-        cleared[t.id] = 1; // you could use true and false, but that's more typing
-        t.value = ''; // with more chance of typos
+    function clearField(t) {                   //declaring the array outside of the
+      if (!cleared[t.id]) {                      // function makes it static and global
+        cleared[t.id] = 1;  // you could use true and false, but that's more typing
+        t.value = '';         // with more chance of typos
         t.style.color = '#fff';
       }
     }

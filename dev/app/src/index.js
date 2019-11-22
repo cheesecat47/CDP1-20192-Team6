@@ -28,6 +28,7 @@ const App = {
         ecommerceStoreArtifact.abi,
         deployedNetwork.address,
       );
+
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
@@ -69,16 +70,17 @@ const App = {
         let productPrice = new URLSearchParams(window.location.search).get('price');
       
         console.log(productId);
-        console.log(productPrice);
 
+        console.log(productPrice);
         this.renderProductDetails(productId); 
         // $("#product-id").attr("value", productId);//method-get으론 id 못넘김
         $("[name=product-id]").attr("value", productId); //method-get으로는 name이 넘어감
         $("[name=product-price]").attr("value", productPrice); //method-get으로는 name이 넘어감
+
       }
 
       // buy-info.html
-      else if (currentFileName.includes("buy-info.html")){
+      else if (currentFileName.includes("buy-info.html")) {
         let productId = new URLSearchParams(window.location.search).get('product-id');
         let quantity = new URLSearchParams(window.location.search).get('quantity');
         let productPrice= new URLSearchParams(window.location.search).get('product-price');
@@ -89,21 +91,71 @@ const App = {
         this.renderProductDetails(productId);
         $("#product-id").attr("value", productId);
         $("#buy-now-price").attr("value", productPrice);
+
       }
 
-      $("#buy-now").submit(function (event) {
-        console.log("hi");
-        $("#msg").hide();
-        var sendAmount = $("#buy-now-price").val();
-        var productId = $("#product-id").val();
-        App.instance.methods.buy(productId).send({
-          value: sendAmount,
-          from: App.account
-        })
-        $("#msg").html("You have successfully purchased the product!");
-        $("#msg").show();
-        event.preventDefault();
-      });
+      // sell.html
+      else if (currentFileName.includes("sell.html")){
+        // insert selling items list
+        var div_selling_list = document.getElementById('selling-list');
+        var div_request_list = document.getElementById('request-list');
+        var sellerId = "0xa10f9eae66A1328e62034bFcc4786A8e3B35ED59";
+
+        $.ajax({
+          url: "http://localhost:3000/products?seller=" + sellerId, // pass by URL
+          type: 'get',
+          contentType: "application/json; charset=utf-8",
+          data: {}
+        }).done(function (data) {
+          // console.log(data); //something to do
+  
+          // iterate to get each information in selling-list
+          for (var item of data) { 
+            console.log(item);
+            var innerbox = document.createElement('div');
+            innerbox.id = item['blockchainId'];
+            innerbox.className = 'item new col-md-4';
+            innerbox.innerHTML = `
+              <a href="sell-info.html?blockchainId=${item['blockchainId']}" style="min-height: 300px;">
+                <div class="featured-item">
+                  <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
+                  <h4>${item['name']}</h4>
+                  <h6>Price: ${displayPrice(String(item['price']))}</h6>
+                </div>
+              </a>
+              `;
+              div_selling_list.appendChild(innerbox);
+          }
+
+          // iterate to get each information in request-list
+          for (var item of data) { 
+            console.log(item);
+            var innerbox = document.createElement('div');
+            innerbox.id = item['blockchainId'];
+            innerbox.className = 'item new col-md-4';
+            innerbox.innerHTML = `
+              <a href="sell-info.html?blockchainId=${item['blockchainId']}" style="min-height: 300px;">
+                <div class="featured-item">
+                  <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
+                  <h4>${item['name']}</h4>
+                  <h6>Price: ${displayPrice(String(item['price']))}</h6>
+                  <h6>Status: ${item['condition']}</h6>
+                </div>
+              </a>
+              `;
+              div_request_list.appendChild(innerbox);
+          }
+        });
+      }
+
+      // sell-info.html
+      else if (currentFileName.includes("sell-info.html")) {
+        let productId = new URLSearchParams(window.location.search).get('blockchainId');
+        // console.log(productId);
+        this.renderSellInfo(productId);
+      }
+
+
 
       $("#add-item-to-store").submit(function (event) {
         const req = $("#add-item-to-store").serialize();
@@ -291,6 +343,23 @@ const App = {
       $("#release-count").html(i[4]);
       $("#refund-count").html(i[5]);
     }
+  },
+
+  renderSellInfo: async function (productId) {
+    $.ajax({
+      // url: "http://localhost:3000/products?productId=" + productId,
+      url: "http://localhost:3000/products?id=" + productId,
+      type: 'get',
+      contentType: "application/json; charset=utf-8",
+      data: {}
+    }).done(function(data){
+        var thisData = data[0];
+        console.log(thisData)
+        $("#product-name").text(thisData['name']);
+        $("#product-image").attr("src", "http://ipfs.io/ipfs/" + thisData['ipfsImageHash']);
+        $("#product-price").html('Price: ' + displayPrice(String(thisData['price'])));
+        // $("#product-id").val(p[0]);
+    });
   }
 };
 
