@@ -3,6 +3,7 @@
 }
 
 .featured-item {
+    display: block;
     min-width: 200px;
     min-height: 350px;
 }
@@ -13,4 +14,12 @@
 
 #map img {
     width: 100%;
+}
+
+#selling-list {
+    height: fit-content !important;
+}
+
+#request-list {
+    height: fit-content !important;
 }

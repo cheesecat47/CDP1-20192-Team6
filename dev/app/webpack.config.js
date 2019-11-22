@@ -17,7 +17,8 @@ module.exports = {
       { from: "./src/buy.html", to: "buy.html" },
       { from: "./src/sell.html", to: "sell.html" },
       { from: "./src/product-detail.html", to: "product-detail.html"},
-      { from: "./src/buy-info.html", to: "buy-info.html"}
+      { from: "./src/buy-info.html", to: "buy-info.html"},
+      { from: "./src/sell-info.html", to: "sell-info.html"}
   ]),
   ],
   devServer: { contentBase: path.join(__dirname, "dist"), compress: true, port: 8081},
