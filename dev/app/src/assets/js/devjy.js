@@ -116,7 +116,7 @@ function fill_list(listname) {
                 innerbox.id = item['blockchainId'];
                 innerbox.className = 'item new col-md-4';
                 innerbox.innerHTML = `
-                    <a href="sell-info.html?id=${item['blockchainId']}" style="min-height: 300px;">
+                    <a href="sell-info.html?blockchainId=${item['blockchainId']}" style="min-height: 300px;">
                     <div class="featured-item">
                         <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
                         <h4>${item['name']}</h4>
