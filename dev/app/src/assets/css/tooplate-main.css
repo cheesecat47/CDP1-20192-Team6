@@ -185,20 +185,24 @@ a {
 	width: 100%;
 }
 .featured-item h4 {
-	font-size: 17px;
+	font-size: 20px;
 	font-weight: 700;
 	color: #1e1e1e;
 	margin-top: 15px;
 	transition: all 0.5s;
+	text-align: center;
+
 }
 .featured-item:hover h4 {
 	color: #3a8bcd;
 }
 .featured-item h6 {
 	color: #3a8bcd;
-	font-size: 15px;
+	font-size: 20px;
 	font-weight: 700;
 	margin-bottom: 0px;
+	text-align: center;
+
 }
 .owl-theme .owl-dots {
 	text-align: center;
