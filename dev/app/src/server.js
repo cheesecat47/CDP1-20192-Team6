@@ -66,17 +66,17 @@ app.get('/products', function(req,res){
         query['buyer'] = {$eq: req.query.buyer};
     }
     ProductModel.find(query, null, {sort: 'startTime'}, function(err, items){
-        console.log("The number of query result = " + items.length);
+        // console.log("The number of query result = " + items.length);
         res.send(items);
     });
 });
 
-// API for num of products
-app.get('/products/length', function(req,res){
-    ProductModel.countDocuments({}, function(err,count){
-        res.send(count.toString());
-    });
-});
+// // API for num of products
+// app.get('/products/length', function(req,res){
+//     ProductModel.countDocuments({}, function(err,count){
+//         res.send(count.toString());
+//     });
+// });
 
 
 function setupProductEventListener(_instance) {
