@@ -91,7 +91,19 @@ const App = {
         this.renderProductDetails(productId);
         $("#product-id").attr("value", productId);
         $("#buy-now-price").attr("value", productPrice);
-
+        $("#buy-now").submit(function (event) {
+          console.log("hi");
+          $("#msg").hide();
+          var sendAmount = $("#buy-now-price").val();
+          var productId = $("#product-id").val();
+          App.instance.methods.buy(productId).send({
+            value: sendAmount,
+            from: App.account
+          })
+          $("#msg").html("You have successfully purchased the product!");
+          $("#msg").show();
+          event.preventDefault();
+        });
       }
 
       // sell.html
