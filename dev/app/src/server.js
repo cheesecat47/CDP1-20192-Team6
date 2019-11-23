@@ -13,6 +13,7 @@ web3.eth.net.getId().then(function (networkId) {
         deployedNetwork.address,
     );
     setupProductEventListener(instance);
+    setupBuyEventListener(instance);
 });
 
 // [mongodb connection]
@@ -61,9 +62,19 @@ app.get('/products', function(req,res){
     if (req.query.seller !== undefined){
         query['seller'] = {$eq: req.query.seller};
     }
+    if (req.query.buyer !== undefined){
+        query['buyer'] = {$eq: req.query.buyer};
+    }
     ProductModel.find(query, null, {sort: 'startTime'}, function(err, items){
         console.log("The number of query result = " + items.length);
         res.send(items);
+    });
+});
+
+// API for num of products
+app.get('/products/length', function(req,res){
+    ProductModel.countDocuments({}, function(err,count){
+        res.send(count.toString());
     });
 });
 
@@ -74,6 +85,15 @@ function setupProductEventListener(_instance) {
     }, (error, event) => {
         console.log(event.returnValues);
         saveProduct(event.returnValues);
+    });
+}
+
+function setupBuyEventListener(_instance) {
+    _instance.events.NewBuy({
+        fromBlock: 0
+    }, (error, event) => {
+        console.log(event.returnValues);
+        addBuyerToProduct(event.returnValues);
     });
 }
 
@@ -93,6 +113,7 @@ function saveProduct(product) {
             startTime: product._startTime,
             price: product._price,
             condition: product._productCondition,
+            buyer: '0x0000000000000000000000000000000000000000',
             seller: product._seller
         });
 
@@ -105,5 +126,14 @@ function saveProduct(product) {
                 });
             }
         });
+    });
+}
+
+function addBuyerToProduct(buy) {
+    ProductModel.findOneAndUpdate({blockchainId: buy._productId}, {$set: {buyer : buy._buyer}}, {new:true}, function(err,doc){
+        if(err){
+            console.log("Something wrong when update");
+        }
+        console.log(doc + "is updated");
     });
 }

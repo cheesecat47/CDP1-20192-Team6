@@ -280,7 +280,7 @@ const App = {
         product = await getProduct(i).call();
         eachItem = "#item-" + ((i - 1) % 6);
         // productid랑 productprice 값을 url로 둘다 넘겨줌
-        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0]);
+        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0] + "&price="+product[6]);
         $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
         $(eachItem).children("h4").text(product[1]);
         $(eachItem).children("h6").text(displayPrice(product[6]));
@@ -312,6 +312,7 @@ const App = {
    // eachItem=
    //  $(".featured-item").css("display");
   //  renderProductDetails랑 같은 형식으로
+    console.log(p[8]);
     $("#product-id").children("h4").text(p[1]);
     $("#product-id").children("img").attr("src", "http://ipfs.io/ipfs/" + p[3]);
     $("#product-id").children("h6").text(displayPrice(p[6]));

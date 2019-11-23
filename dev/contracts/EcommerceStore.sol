@@ -26,6 +26,7 @@ contract EcommerceStore {
     }
 
     event NewProduct(uint _productId, string _name, string _category, string _imageLink, string _descLink, uint _startTime, uint _price, uint _productCondition, address payable _seller);
+    event NewBuy(uint _productId, address payable _buyer);
     constructor(address _arbiter) public {
         productIndex = 0;
         arbiter = _arbiter;
@@ -58,6 +59,7 @@ contract EcommerceStore {
         stores[productIdInStore[_productId]][_productId] = product;
         Escrow escrow = (new Escrow).value(msg.value)(_productId, msg.sender, productIdInStore[_productId], arbiter);
         productEscrow[_productId] = address(escrow);
+        emit NewBuy(_productId, msg.sender);
     }
 
     function escrowInfo(uint _productId) view public returns(address, address, address, bool, uint, uint) {
