@@ -71,6 +71,17 @@ app.get('/products', function(req,res){
     });
 });
 
+app.get('/products/buy', function(req, res){
+    console.log(req.query);
+    ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : String(req.query.destination), phoneNumber: String(req.query.phoneNumber)}}, {new:true}, function(err,doc){
+        if(err){
+            console.log("Something wrong when update");
+        }
+        res.send(doc);
+        console.log(doc + "is updated");
+    });
+})
+
 // // API for num of products
 // app.get('/products/length', function(req,res){
 //     ProductModel.countDocuments({}, function(err,count){
@@ -114,7 +125,9 @@ function saveProduct(product) {
             price: product._price,
             condition: product._productCondition,
             buyer: '0x0000000000000000000000000000000000000000',
-            seller: product._seller
+            seller: product._seller,
+            destination: 'destination',
+            phoneNumber: 'phoneNumber'
         });
 
         p.save(function(error) { // save product to DB

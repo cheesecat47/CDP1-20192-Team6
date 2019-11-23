@@ -21,12 +21,6 @@
   <link rel="stylesheet" href="assets/css/owl.css">
   <link rel="stylesheet" href="assets/css/flex-slider.css">
   <link rel="stylesheet" href="assets/css/devjy.css">
-
-  <script type="text/javascript">
-    function display_alert() {
-      alert("발송 완료! 구매자가 배송 확인 시 이더가 지급됩니다.");
-    } 
-  </script>
 </head>
 
 <body>
@@ -46,6 +40,11 @@
   <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark static-top"></nav>
 
   <!-- Page Content -->
+  <br>
+  <br>
+  <div class="col-sm-12">
+    <div style="display: none;" class="alert alert-success text-center" id="msg"></div>
+  </div>
   <!-- Single Starts Here -->
   <div class="single-product">
     <div class="container">
@@ -72,20 +71,20 @@
             <form name="deliver_form" action="" method="get">
               <table>
                 <tr>
-                  <td><label for="buyer_name">Name:</label></td>
-                  <td> Steven </td>
+                      <td><label for="status">배송 상태 : </label></td>
+                      <td id="product-status">발송 대기중</td>
+                    </tr>
+                <tr>
+                  <td><label for="buyer_address">배송희망주소: </label></td>
+                  <td id="buyer-address"></td>
                 </tr>
                 <tr>
-                  <td><label for="buyer_address">Address:</label></td>
-                  <td> 대구 북구 경북대학교 it-5호관 </td>
-                </tr>
-                <tr>
-                  <td><label for="buyer_contact">Mobile:</label></td>
-                  <td> 010-123-456 </td>
+                  <td><label for="buyer_contact">구매자 전화번호: </label></td>
+                  <td id="buyer-phone"></td>
                 </tr>
               </table>
               <br>
-              <input type="button" id="deliver_item_btn" class="btn btn-primary btn-block" value="발송완료!" onclick="display_alert()">
+              <input type="button" id="release-funds" class="btn btn-primary btn-block" value="발송완료!">
             </form>
             <br>
           </div>

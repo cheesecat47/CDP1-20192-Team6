@@ -70,12 +70,8 @@
             </div>
             <br>
             <div class="info">
-              <form name="deliver_form" id="buy-now" action="index.html" method="get">
+              <form name="deliver_form" id="buy-now" action="/products/buy" method="get">
                 <table>
-                  <tr>
-                    <td><div id="info-name">이름 : </div></td>
-                    <td><input type="text" name="name" id="name" placeholder="이름을 입력해주세요"></td>
-                  </tr>
                   <tr>
                     <td><div id="info-add"> 주소 : </div></td>
                     <td><input type="text" name="address" id="add" placeholder="배송받을 주소를 입력해주세요"></td>
@@ -85,8 +81,7 @@
                     <td><input type="text" name="call" id="tel" placeholder="연락처를 입력해주세요"></td>
                   </tr>
                 </table>
-                <input type="hidden" id="product-id" value="100">
-                <input type="hidden" id="buy-now-price" value="110">
+                <input type="hidden" name="id" id="product-id" value="100">
                 <br>
                 <input type="submit" id="deliver_item_btn" class="btn btn-primary btn-block" value="구매완료!">
               </form>

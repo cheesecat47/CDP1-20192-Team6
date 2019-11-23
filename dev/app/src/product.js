@@ -15,6 +15,8 @@ var ProductSchema = new Schema({
     condition: Number,
     buyer: String,
     seller: String,
+    destination: String,
+    phoneNumber: String,
 });
 
 // make a collection
