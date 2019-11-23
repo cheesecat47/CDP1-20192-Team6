@@ -280,7 +280,7 @@ const App = {
         product = await getProduct(i).call();
         eachItem = "#item-" + ((i - 1) % 6);
         // productid랑 productprice 값을 url로 둘다 넘겨줌
-        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0]+"&"+"price="+product[6]);
+        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0]);
         $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
         $(eachItem).children("h4").text(product[1]);
         $(eachItem).children("h6").text(displayPrice(product[6]));
