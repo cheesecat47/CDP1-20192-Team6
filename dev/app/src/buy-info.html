@@ -56,29 +56,47 @@
           </div>
         </div>
         <div class="col-md-6">
+          <div id="map">
+            <img id="product-image" src="#" alt="No img.">
+          </div>
+        </div>
+        <div class="col-md-6">
           <div class="right-content">
             <div class="down-content">
-              <div class="info">
-                <div id="info-name">이름 : <input type="text" name="name" id="name" placeholder="이름을 입력해주세요"></div>
-                <div id="info-add"> 주소 : <input type="text" name="address" id="add" placeholder="배송받을 주소를 입력해주세요"></div>
-                <div id="info-tel">연락처 : <input type="text" name="call" id="tel" placeholder="연락처를 입력해주세요"></div>
-              </div>
-              <br>
+              <h4 id="product-name"></h4>
+              <h6 id="product-quantity"></h6>
+              <h6 id="product-whole_price"></h6>
+              <h6 id="product-seller"></h6>
+            </div>
+            <br>
+            <div class="info">
               <form name="deliver_form" id="buy-now" action="index.html" method="get">
-                <!--  -->
+                <table>
+                  <tr>
+                    <td><div id="info-name">이름 : </div></td>
+                    <td><input type="text" name="name" id="name" placeholder="이름을 입력해주세요"></td>
+                  </tr>
+                  <tr>
+                    <td><div id="info-add"> 주소 : </div></td>
+                    <td><input type="text" name="address" id="add" placeholder="배송받을 주소를 입력해주세요"></td>
+                  </tr>
+                  <tr>
+                    <td><div id="info-tel">연락처 : </div></td>
+                    <td><input type="text" name="call" id="tel" placeholder="연락처를 입력해주세요"></td>
+                  </tr>
+                </table>
                 <input type="hidden" id="product-id" value="100">
                 <input type="hidden" id="buy-now-price" value="110">
-                <input type="submit" id="deliver_item_btn" class="button" value="구매완료!">
+                <br>
+                <input type="submit" id="deliver_item_btn" class="btn btn-primary btn-block" value="구매완료!">
               </form>
-            </div>
+              <br>
+            </div><!-- end info -->
           </div>
         </div>
       </div>
     </div>
     <!-- Single Page Ends Here -->
-
-
-
 
 
     <div class="col-sm-12">

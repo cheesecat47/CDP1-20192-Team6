@@ -22,13 +22,14 @@ sudo apt update
 
 
 echo -e '\n#####\n#####\tInstall nodejs\n#####'
-sudo apt install nodejs
+sudo apt install -y nodejs
+sudo apt install -y npm
 cd $dev_app
 sudo npm -y install
 
 
 echo -e '\n#####\n#####\tInstall ganache-cli\n#####'
-sudo npm -y install ganache-cli
+sudo npm -y install -g ganache-cli
 
 
 echo -e '\n#####\n#####\tInstall truffle\n#####'
@@ -36,13 +37,18 @@ sudo npm -y install -g truffle
 
 
 echo -e '\n#####\n#####\tInstall ipfs\n#####'
-cd ~
-git clone https://github.com/ipfs-shipyard/ipfs-desktop.git
-cd ipfs-desktop
-sudo npm -y install -g npx
-sudo npm -y install
+# cd ~
+# git clone https://github.com/ipfs-shipyard/ipfs-desktop.git
+# cd ipfs-desktop
+# sudo npm install -g npx
+# sudo npm install
+# sudo npm start
+cd $cdp1/ipfs-install/
+tar xvfz go-ipfs_v0.4.22_linux-amd64.tar.gz
+cd go-ipfs/
+sudo ./install.sh
 
-rm -rf ~/.ipfs
+# rm -rf ~/.ipfs
 ipfs init
 
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
