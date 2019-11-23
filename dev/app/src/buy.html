@@ -45,28 +45,20 @@
   <div class="featured-page">
     <div class="container">
       <div class="row">
-        <div class="section-heading">
-          <div class="line-dec"></div>
-        </div>
-
-        <div class="wrap">
-          <div class="search">
-            <input type="text" class="searchTerm" placeholder="What are you looking for?">
-            <button type="submit" class="searchButton">
-              <i class="fa fa-search"></i>
-            </button>
+        <div class="col-md-4 col-sm-12">
+          <div class="section-heading ">
+            <div class="line-dec"></div>
+            <div id="filters" class="button-group pull-left">
+                <button class="btn btn-primary" id="productList">
+                  <h5>물품목록</h5>
+                </button>
+                <button class="btn btn-primary" id="productPurchased">
+                    <h5>구매내역</h5>
+                </button>
+              </div>
           </div>
         </div>
-        <div id="filters-1" class="button-group">
-          <button class="btn btn-primary" data-filter="*">가격순</button>
-          <button class="btn btn-primary" data-filter=".new">등록일자순</button>
-          <button class="btn btn-primary" data-filter=".low">상품등급순</button>
-        </div>
 
-        <div id="link-purchase" class="button-purchase">
-          <button class="btn btn-item_list" id="productList">물품목록</button>
-          <button class="btn btn-purchase_list" id="productPurchased">구매내역</button>
-        </div>
       </div>
     </div>
 
@@ -138,7 +130,7 @@
         <div class="col-md-12">
           <ul>
             <li class="current-page page-number"><a href="#">1</a></li>
-            <li class="page-number"><a href="#" >2</a></li>
+            <li class="page-number"><a href="#">2</a></li>
             <li class="page-number"><a href="#">3</a></li>
             <li class="page-number"><a href="#"><i class="fa fa-angle-right"></i></a></li>
           </ul>

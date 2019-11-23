@@ -57,22 +57,22 @@ const App = {
           listStatus = "purchased";
           App.renderProducts(listStatus, 1);
         });
-        $(".page-number").click(function (event) {
-          $(".current-page").removeClass("current-page");
-          $(this).addClass("current-page");
-          pageNum = parseInt($(this).text());
-          App.renderProducts(listStatus, pageNum);
-        })
+        // $(".page-number").click(function (event) {
+        //   $(".current-page").removeClass("current-page");
+        //   $(this).addClass("current-page");
+        //   pageNum = parseInt($(this).text());
+        //   App.renderProducts(listStatus, pageNum);
+        // })
       }
       // product-detail.html
       else if (currentFileName.includes("product-detail.html")) {
         let productId = new URLSearchParams(window.location.search).get('id');
         let productPrice = new URLSearchParams(window.location.search).get('price');
-      
+
         console.log(productId);
 
         console.log(productPrice);
-        this.renderProductDetails(productId); 
+        this.renderProductDetails(productId);
         // $("#product-id").attr("value", productId);//method-get으론 id 못넘김
         $("[name=product-id]").attr("value", productId); //method-get으로는 name이 넘어감
         $("[name=product-price]").attr("value", productPrice); //method-get으로는 name이 넘어감
@@ -83,8 +83,8 @@ const App = {
       else if (currentFileName.includes("buy-info.html")) {
         let productId = new URLSearchParams(window.location.search).get('product-id');
         let quantity = new URLSearchParams(window.location.search).get('quantity');
-        let productPrice= new URLSearchParams(window.location.search).get('product-price');
-    
+        let productPrice = new URLSearchParams(window.location.search).get('product-price');
+
         console.log(productId);
         console.log(quantity);
         console.log(productPrice);
@@ -107,7 +107,7 @@ const App = {
       }
 
       // sell.html
-      else if (currentFileName.includes("sell.html")){
+      else if (currentFileName.includes("sell.html")) {
         // insert selling items list
         var div_selling_list = document.getElementById('selling-list');
         var div_request_list = document.getElementById('request-list');
@@ -120,9 +120,9 @@ const App = {
           data: {}
         }).done(function (data) {
           // console.log(data); //something to do
-  
+
           // iterate to get each information in selling-list
-          for (var item of data) { 
+          for (var item of data) {
             console.log(item);
             var innerbox = document.createElement('div');
             innerbox.id = item['blockchainId'];
@@ -136,11 +136,11 @@ const App = {
                 </div>
               </a>
               `;
-              div_selling_list.appendChild(innerbox);
+            div_selling_list.appendChild(innerbox);
           }
 
           // iterate to get each information in request-list
-          for (var item of data) { 
+          for (var item of data) {
             console.log(item);
             var innerbox = document.createElement('div');
             innerbox.id = item['blockchainId'];
@@ -155,7 +155,7 @@ const App = {
                 </div>
               </a>
               `;
-              div_request_list.appendChild(innerbox);
+            div_request_list.appendChild(innerbox);
           }
         });
       }
@@ -280,7 +280,7 @@ const App = {
         product = await getProduct(i).call();
         eachItem = "#item-" + ((i - 1) % 6);
         // productid랑 productprice 값을 url로 둘다 넘겨줌
-        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0] + "&price="+product[6]);
+        $(eachItem).closest("a").attr("href", "product-detail.html?id=" + product[0] + "&price=" + product[6]);
         $(eachItem).children("img").attr("src", "http://ipfs.io/ipfs/" + product[3]);
         $(eachItem).children("h4").text(product[1]);
         $(eachItem).children("h6").text(displayPrice(product[6]));
@@ -302,60 +302,51 @@ const App = {
 
   renderProductDetails: async function (productId) {
     const {
-      getProduct,
-      escrowInfo,
-      productIndex
+      escrowInfo
     } = this.instance.methods;
-    var p = await getProduct(productId).call();
-    var count = await productIndex().call();
-    var eachItem;
-   // eachItem=
-   //  $(".featured-item").css("display");
-  //  renderProductDetails랑 같은 형식으로
-    console.log(p[8]);
-    $("#product-id").children("h4").text(p[1]);
-    $("#product-id").children("img").attr("src", "http://ipfs.io/ipfs/" + p[3]);
-    $("#product-id").children("h6").text(displayPrice(p[6]));
-    $("#product-id").val(p[0]);
-    // $("#buy-now-price").val((p[6]));
-    if (p[8] == '0x0000000000000000000000000000000000000000') {
-      $("#product-status").text("상태 : 구매가능");
-    } else {
-      $("#product-status").text("상태 : 거래중");
-    }
-    // var desFile = await ipfs.cat(p[4]);
 
-    // var content = desFile.toString();
-    // $("#product-desc").text(content);
-    var j = 0
-    for (var i = 1; i <= count; i++) {
-      var otherProduct = await getProduct(i).call();
-      if (p[0] != i) {
-        // $(".owl-carousel").trigger('remove.owl.carousel',[i]).trigger('refresh.owl.carousel');
-        $(".owl-carousel").trigger('add.owl.carousel', [$("<a href='product-detail.html'>\
-                                                            <div class='featured-item'>\
-                                                              <img src='http://ipfs.io/ipfs/" + otherProduct[3] + "' alt='Item 1'>\
-                                                              <h4>" + otherProduct[1] + "</h4> \
-                                                              <h6>" + displayPrice(otherProduct[6]) + "</h6> \
-                                                            </div> \
-                                                          </a>\
-                                                      ")]).trigger('refresh.owl.carousel');
-        j++;
-      }
-    }
+    $.ajax({
+      url: "http://localhost:3000/products", // pass by URL
+      type: 'get',
+      contentType: "application/json; charset=utf-8",
+      data: {}
+    }).done(async function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var p = data[i];
+        if (Number(p["blockchainId"]) != productId) {   
+          console.log(p);       
+          $(".owl-carousel").trigger('add.owl.carousel', [$("<a href='product-detail.html'>\
+                                                              <div class='featured-item'>\
+                                                                <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                                                                <h4>" + p["name"] + "</h4> \
+                                                                <h6>" + displayPrice(String(p["price"])) + "</h6> \
+                                                              </div> \
+                                                            </a>\
+                                                        ")]).trigger('refresh.owl.carousel');
+        } else {
+          $("#product-id").children("h4").text(p["name"]);
+          $("#product-id").children("img").attr("src", "http://ipfs.io/ipfs/" + p["ipfsImageHash"]);
+          $("#product-id").children("h6").text(displayPrice(String(p["price"])));
+          // $("#product-id").val(p["blockchainId"]);
 
-    //escrow
-    if (p[8] == '0x0000000000000000000000000000000000000000') {
-      $("#escrow-info").hide();
-    } else {
-     // $("#buy-now").hide(); 
-      const i = await escrowInfo(productId).call();
-      $("#buyer").html('Buyer : ' + i[0]);
-      $("#seller").html('seller : ' + i[1]);
-      $("#arbiter").html('arbiter : ' + i[2]);
-      $("#release-count").html(i[4]);
-      $("#refund-count").html(i[5]);
-    }
+          //escrow
+          if (p["buyer"] == '0x0000000000000000000000000000000000000000') {
+            $("#escrow-info").hide();
+            $("#product-status").text("상태 : 구매가능");
+          } else {
+            const i = await escrowInfo(productId).call();
+            $("#buyer").html('Buyer : ' + i[0]);
+            $("#seller").html('seller : ' + i[1]);
+            $("#arbiter").html('arbiter : ' + i[2]);
+            $("#release-count").html(i[4]);
+            $("#refund-count").html(i[5]);
+            $("#deliver_item_btn").hide();
+            $("#product-status").text("상태 : 거래중");
+          }
+        }
+      };
+    })
+
   },
 
   renderSellInfo: async function (productId) {
@@ -365,13 +356,13 @@ const App = {
       type: 'get',
       contentType: "application/json; charset=utf-8",
       data: {}
-    }).done(function(data){
-        var thisData = data[0];
-        console.log(thisData)
-        $("#product-name").text(thisData['name']);
-        $("#product-image").attr("src", "http://ipfs.io/ipfs/" + thisData['ipfsImageHash']);
-        $("#product-price").html('Price: ' + displayPrice(String(thisData['price'])));
-        // $("#product-id").val(p[0]);
+    }).done(function (data) {
+      var thisData = data[0];
+      console.log(thisData)
+      $("#product-name").text(thisData['name']);
+      $("#product-image").attr("src", "http://ipfs.io/ipfs/" + thisData['ipfsImageHash']);
+      $("#product-price").html('Price: ' + displayPrice(String(thisData['price'])));
+      // $("#product-id").val(p[0]);
     });
   }
 };
