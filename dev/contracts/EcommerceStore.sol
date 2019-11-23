@@ -26,7 +26,6 @@ contract EcommerceStore {
     }
 
     event NewProduct(uint _productId, string _name, string _category, string _imageLink, string _descLink, uint _startTime, uint _price, uint _productCondition, address payable _seller);
-    
     constructor(address _arbiter) public {
         productIndex = 0;
         arbiter = _arbiter;
