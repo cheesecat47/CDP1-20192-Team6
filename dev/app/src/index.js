@@ -40,7 +40,8 @@ const App = {
 
       // index.html
       if (currentFileName.includes("index.html")) {
-        this.renderProducts("onDisplay");
+        // this.renderProducts("onDisplay");
+        this.renderIndexProducts();
       }
       // buy.html
       else if (currentFileName.includes("buy.html")) {
@@ -210,9 +211,9 @@ const App = {
     addProductToStore(product["product-name"], product["product-category"], imageId,
       descId, Date.parse(product["product-start-time"]) / 1000,
       this.web3.utils.toWei(product["product-price"], 'ether'), product["product-condition"]).send({
-      from: this.account,
-      gas: 4700000
-    });
+        from: this.account,
+        gas: 4700000
+      });
   },
 
   saveImageOnIpfs: async function (reader) {
@@ -336,7 +337,7 @@ const App = {
 
             $('#btn-product-detail').val("배송 확인");
             $('#btn-product-detail').prop('type', 'button');
-          
+
             $("#btn-product-detail").hide();
             var btn_product_detail = document.getElementById('btn-product-detail');
             btn_product_detail.id = 'release-funds';
@@ -409,7 +410,7 @@ const App = {
       const {
         releaseAmountToSeller
       } = App.instance.methods;
-
+      something
       let productId = new URLSearchParams(window.location.search).get('blockchainId');
 
 
@@ -421,6 +422,50 @@ const App = {
       }).then(window.location.reload());
     });
 
+  },
+
+  renderIndexProducts: async function () {
+    // 내가 구매한 상품 리스트
+    $.ajax({
+      url: "http://localhost:3000/products?buyer=" + App.account,
+      type: 'get',
+      contentType: "application/json; charset=utf-8",
+      data: {}
+    }).done(function (data) {
+      for (var p of data){
+        console.log(p);
+        $("#index_buy_list").trigger('add.owl.carousel', 
+              [$("<a href='product-detail.html'>\
+                    <div class='featured-item'>\
+                      <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                      <h4>" + p["name"] + "</h4> \
+                      <h6>" + displayPrice(String(p["price"])) + "</h6> \
+                    </div> \
+                  </a>\
+              ")]).trigger('refresh.owl.carousel');
+      }
+    });
+
+    // 내가 판매중인 상품 리스트
+    $.ajax({
+      url: "http://localhost:3000/products?seller=" + App.account,
+      type: 'get',
+      contentType: "application/json; charset=utf-8",
+      data: {}
+    }).done(function (data) {
+      for (var p of data){
+        console.log(p);
+        $("#index_sell_list").trigger('add.owl.carousel', 
+              [$("<a href='product-detail.html'>\
+                    <div class='featured-item'>\
+                      <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                      <h4>" + p["name"] + "</h4> \
+                      <h6>" + displayPrice(String(p["price"])) + "</h6> \
+                    </div> \
+                  </a>\
+              ")]).trigger('refresh.owl.carousel');
+      }
+    });
   }
 };
 
