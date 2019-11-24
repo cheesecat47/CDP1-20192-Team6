@@ -44,25 +44,7 @@ const App = {
       }
       // buy.html
       else if (currentFileName.includes("buy.html")) {
-        var listStatus = "onDisplay";
-        var pageNum = 1;
-
-        this.renderProducts("onDisplay", 1);
-
-        $("#productList").click(function (event) {
-          listStatus = "onDisplay";
-          App.renderProducts(listStatus, 1);
-        });
-        $("#productPurchased").click(function (event) {
-          listStatus = "purchased";
-          App.renderProducts(listStatus, 1);
-        });
-        // $(".page-number").click(function (event) {
-        //   $(".current-page").removeClass("current-page");
-        //   $(this).addClass("current-page");
-        //   pageNum = parseInt($(this).text());
-        //   App.renderProducts(listStatus, pageNum);
-        // })
+        this.renderProducts();
       }
       // product-detail.html
       else if (currentFileName.includes("product-detail.html")) {
@@ -91,9 +73,10 @@ const App = {
             App.instance.methods.buy(productId).send({
               value: sendAmount,
               from: App.account
-            })
-            $("#msg").html("You have successfully purchased the product!");
-            $("#msg").show();
+            }).then(function () {
+              window.location.href = 'http://localhost:8081/product-detail.html?id=' + String(thisData['blockchainId']);
+              alert("판매자에게 구매 요청을 보냈습니다.\n 상품 수령후 수령확인 버튼을 눌러주셔야 판매자에게 이더가 지급됩니다.");
+            });
             event.preventDefault();
           });
         });
@@ -125,7 +108,7 @@ const App = {
               innerbox.innerHTML = `
               <a href="sell-info.html?blockchainId=${item['blockchainId']}" style="min-height: 300px;">
                 <div class="featured-item">
-                  <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
+                  <img src="http://localhost:8080/ipfs/${item['ipfsImageHash']}" alt="No image">
                   <h4>${item['name']}</h4>
                   <h6>Price: ${displayPrice(String(item['price']))}</h6>
                 </div>
@@ -145,7 +128,7 @@ const App = {
               innerbox.innerHTML = `
                 <a href="sell-info.html?blockchainId=${item['blockchainId']}" style="min-height: 300px;">
                   <div class="featured-item">
-                    <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
+                    <img src="http://localhost:8080/ipfs/${item['ipfsImageHash']}" alt="No image">
                     <h4>${item['name']}</h4>
                     <h6>Price: ${displayPrice(String(item['price']))}</h6>
                   </div>
@@ -212,6 +195,8 @@ const App = {
       this.web3.utils.toWei(product["product-price"], 'ether'), product["product-condition"]).send({
       from: this.account,
       gas: 4700000
+    }).then(function () {
+      window.location.href = 'http://localhost:8081/sell.html'
     });
   },
 
@@ -243,51 +228,52 @@ const App = {
     })
   },
 
-  renderProducts: async function (storeName, pageNum) {
+  renderProducts: async function () {
+    var div_product_list = document.getElementById('product-list');
+    var div_purchased_list = document.getElementById('purchased-list');
+    var buyerId = App.account;
 
-    var product_list = document.getElementById('product-list');
     $.ajax({
       url: "http://localhost:3000/products", // pass by URL
       type: 'get',
       contentType: "application/json; charset=utf-8",
       data: {}
     }).done(function (data) {
-      // console.log(data); //something to do
-
-      $("#product-list").empty();
-      // iterate to get each information in selling-list
       for (var item of data) {
-        var innerbox = document.createElement('div');
-        innerbox.id = item['blockchainId'];
-        innerbox.className = 'item new col-md-4';
-        innerbox.innerHTML = `
+        if (item["buyer"] == "0x0000000000000000000000000000000000000000") {
+          var innerbox = document.createElement('div');
+          innerbox.id = item['blockchainId'];
+          innerbox.className = 'item new col-md-4';
+          innerbox.innerHTML = `
           <a href="product-detail.html?id=${item['blockchainId']}" style="min-height: 300px;">
             <div class="featured-item">
-              <img src="http://ipfs.io/ipfs/${item['ipfsImageHash']}" alt="No image">
+              <img src="http://localhost:8080/ipfs/${item['ipfsImageHash']}" alt="No image">
               <h4>${item['name']}</h4>
               <h6>Price: ${displayPrice(String(item['price']))}</h6>
             </div>
           </a>
           `;
-        innerbox.style.display = "none";
-        product_list.appendChild(innerbox);
+          div_product_list.appendChild(innerbox);
+        }
       }
 
-      var itemlist = document.getElementsByClassName('item');
-      if (storeName == "onDisplay") {
-        for (var eachItem of itemlist) {
-          console.log("hihhihihii");
-          var temp = data[eachItem.id - 1];
-          if (temp['buyer'] == '0x0000000000000000000000000000000000000000') {
-            eachItem.style.display = "";
-          }
-        }
-      } else {
-        for (var eachItem of itemlist) {
-          var temp = data[eachItem.id - 1];
-          if (temp['buyer'] == App.account) {
-            eachItem.style.display = "";
-          }
+      // iterate to get each information in request-list
+      for (var item of data) {
+        if (item["buyer"] == buyerId) {
+
+          var innerbox = document.createElement('div');
+          innerbox.id = item['blockchainId'];
+          innerbox.className = 'item new col-md-4';
+          innerbox.innerHTML = `
+            <a href="product-detail.html?id=${item['blockchainId']}" style="min-height: 300px;">
+              <div class="featured-item">
+                <img src="http://localhost:8080/ipfs/${item['ipfsImageHash']}" alt="No image">
+                <h4>${item['name']}</h4>
+                <h6>Price: ${displayPrice(String(item['price']))}</h6>
+              </div>
+            </a>
+            `;
+          div_purchased_list.appendChild(innerbox);
         }
       }
     });
@@ -304,37 +290,32 @@ const App = {
       contentType: "application/json; charset=utf-8",
       data: {}
     }).done(async function (data) {
-      for (var i = 0; i < data.length; i++) {
-        var p = data[i];
+      console.log(data);
+      for (var p of data) {
         if (Number(p["blockchainId"]) != productId) {
           $(".owl-carousel").trigger('add.owl.carousel', [$("<a href='product-detail.html'>\
                                                               <div class='featured-item'>\
-                                                                <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                                                                <img src='http://localhost:8080/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
                                                                 <h4>" + p["name"] + "</h4> \
                                                                 <h6>" + displayPrice(String(p["price"])) + "</h6> \
                                                               </div> \
                                                             </a>\
                                                         ")]).trigger('refresh.owl.carousel');
         } else {
-          $("#product-id").children("h4").text(p["name"]);
-          $("#product-id").children("img").attr("src", "http://ipfs.io/ipfs/" + p["ipfsImageHash"]);
-          $("#product-id").children("h6").text(displayPrice(String(p["price"])));
-
-          // if (thisData['buyer'] == App.account){
-          //   $('#btn-product-detail').val("배송 확인");
-          //   $('#btn-product-detail').prop('type', 'button');
-          //   var btn_product_detail = document.getElementById('btn-product-detail');
-          //   btn_product_detail.id = 'release-funds';
-          // }
-
-          //escrow
+          $("#product-id").children("img").attr("src", "http://localhost:8080/ipfs/" + p["ipfsImageHash"]);
+          $("#product-name").html(`<h4>${p['name']}</h4>`);
+          $("#product-price").html('<h6>' + displayPrice(String(p['price'])) + '</h6>')
+          ipfs.cat(String(p['ipfsDescHash'])).then(function (file) {
+            var desc = file.toString();
+            $("#product-desc").text(desc);
+          });
 
           const i = await escrowInfo(productId).call();
           if (p["buyer"] == '0x0000000000000000000000000000000000000000') {
             $("#product-status").text("상태 : 구매가능");
           } else {
 
-            $('#btn-product-detail').val("배송 확인");
+            $('#btn-product-detail').val("수령 확인");
             $('#btn-product-detail').prop('type', 'button');
           
             $("#btn-product-detail").hide();
@@ -354,25 +335,28 @@ const App = {
             if (i[4] >= 2) {
               $("#product-status").text("거래완료");
             }
+
+            $("#release-funds").click(function (event) {
+              const {
+                releaseAmountToSeller
+              } = App.instance.methods;
+              let productId = new URLSearchParams(window.location.search).get('id');
+              releaseAmountToSeller(productId).send({
+                from: App.account,
+                gas: 4700000
+              }).then(function(){
+                window.location.reload();
+                alert("상품수령이 확인되었습니다. 판매자에게 이더를 지급합니다.");
+              });
+            }); //release-funds
           }
 
-          $("#release-funds").click(function (event) {
-            const {
-              releaseAmountToSeller
-            } = App.instance.methods;
-            let productId = new URLSearchParams(window.location.search).get('id');
-            $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
-            $("#msg").show();
-            releaseAmountToSeller(productId).send({
-              from: App.account,
-              gas: 4700000
-            }).then(window.location.reload());
-          });
-
-        }
-      };
-    })
-
+        } // else
+      } //for
+    }); //query callback
+    
+    
+    
   },
 
   renderSellInfo: async function (productId) {
@@ -385,9 +369,9 @@ const App = {
       data: {}
     }).done(function (data) {
       var thisData = data[0];
-      console.log(thisData)
+      console.log(thisData['destination']);
       $("#product-name").text(thisData['name']);
-      $("#product-image").attr("src", "http://ipfs.io/ipfs/" + thisData['ipfsImageHash']);
+      $("#product-image").attr("src", "http://localhost:8080/ipfs/" + thisData['ipfsImageHash']);
       $("#product-price").html('Price: ' + displayPrice(String(thisData['price'])));
       $("#buyer-address").text(thisData['destination']);
       $("#buyer-phone").text(thisData['phoneNumber']);
@@ -409,16 +393,15 @@ const App = {
       const {
         releaseAmountToSeller
       } = App.instance.methods;
-
       let productId = new URLSearchParams(window.location.search).get('blockchainId');
-
-
       $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
       $("#msg").show();
       releaseAmountToSeller(productId).send({
         from: App.account,
         gas: 4700000
-      }).then(window.location.reload());
+      }).then(function () {
+        window.location.reload();
+      });
     });
 
   }

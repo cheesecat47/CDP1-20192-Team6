@@ -82,13 +82,6 @@ app.get('/products/buy', function(req, res){
     });
 })
 
-// // API for num of products
-// app.get('/products/length', function(req,res){
-//     ProductModel.countDocuments({}, function(err,count){
-//         res.send(count.toString());
-//     });
-// });
-
 
 function setupProductEventListener(_instance) {
     _instance.events.NewProduct({
