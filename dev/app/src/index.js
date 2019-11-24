@@ -40,7 +40,8 @@ const App = {
 
       // index.html
       if (currentFileName.includes("index.html")) {
-        this.renderProducts("onDisplay");
+        // this.renderProducts("onDisplay");
+        this.renderIndexProducts();
       }
       // buy.html
       else if (currentFileName.includes("buy.html")) {
@@ -317,7 +318,7 @@ const App = {
 
             $('#btn-product-detail').val("수령 확인");
             $('#btn-product-detail').prop('type', 'button');
-          
+
             $("#btn-product-detail").hide();
             var btn_product_detail = document.getElementById('btn-product-detail');
             btn_product_detail.id = 'release-funds';
@@ -393,6 +394,7 @@ const App = {
       const {
         releaseAmountToSeller
       } = App.instance.methods;
+
       let productId = new URLSearchParams(window.location.search).get('blockchainId');
       $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
       $("#msg").show();
@@ -404,6 +406,50 @@ const App = {
       });
     });
 
+  },
+
+  renderIndexProducts: async function () {
+    // 내가 구매한 상품 리스트
+    $.ajax({
+      url: "http://localhost:3000/products?buyer=" + App.account,
+      type: 'get',
+      contentType: "application/json; charset=utf-8",
+      data: {}
+    }).done(function (data) {
+      for (var p of data){
+        console.log(p);
+        $("#index_buy_list").trigger('add.owl.carousel', 
+              [$("<a href='product-detail.html'>\
+                    <div class='featured-item'>\
+                      <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                      <h4>" + p["name"] + "</h4> \
+                      <h6>" + displayPrice(String(p["price"])) + "</h6> \
+                    </div> \
+                  </a>\
+              ")]).trigger('refresh.owl.carousel');
+      }
+    });
+
+    // 내가 판매중인 상품 리스트
+    $.ajax({
+      url: "http://localhost:3000/products?seller=" + App.account,
+      type: 'get',
+      contentType: "application/json; charset=utf-8",
+      data: {}
+    }).done(function (data) {
+      for (var p of data){
+        console.log(p);
+        $("#index_sell_list").trigger('add.owl.carousel', 
+              [$("<a href='product-detail.html'>\
+                    <div class='featured-item'>\
+                      <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                      <h4>" + p["name"] + "</h4> \
+                      <h6>" + displayPrice(String(p["price"])) + "</h6> \
+                    </div> \
+                  </a>\
+              ")]).trigger('refresh.owl.carousel');
+      }
+    });
   }
 };
 
