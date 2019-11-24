@@ -19,6 +19,10 @@
 #product-list {
     height: fit-content !important;
 }
+#purchased-list {
+    height: fit-content !important;
+}
+
 
 #selling-list {
     height: fit-content !important;
