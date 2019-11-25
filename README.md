@@ -26,12 +26,15 @@
 1. node.js
     ```Bash
     $ apt install nodejs
+    $ apt install npm
+    $ cd dev/app
+    $ npm install
     ```
 
 1. ganache-cli  
     ```Bash
     $ cd dev/app
-    $ npm install ganache-cli
+    $ npm install -g ganache-cli
     ```
 
 1. truffle
@@ -45,16 +48,13 @@
 
 1. IPFS daemon  
     ```Bash
-    # https://ipfs.io/#install
-    $ cd ~
-    $ git clone https://github.com/ipfs-shipyard/ipfs-desktop.git
-    $ cd ipfs-desktop
-    $ npm install -g npx
-    $ npm install
-    $ npm start
+    # Download IPFS Prebuild Package from this site.
+    # https://docs.ipfs.io/guides/guides/install/
+    $ tar xvfz 'download_ipfs_file.tar.gz'
+    $ cd go-ipfs
+    $ ./install.sh
     
     # Initialise IPFS Daemon
-    $ rm -rf ~/.ipfs
     $ ipfs init
     
     # Allow IPFS to access with http protocol in web browser.

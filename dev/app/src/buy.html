@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
-  <title>블록체인 중고마켓, 안전한 거래</title>
+  <title>KNU Phone Market</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="assets/css/fontawesome.css">
   <link rel="stylesheet" href="assets/css/tooplate-main.css">
   <link rel="stylesheet" href="assets/css/owl.css">
-  <link rel="stylesheet" href="assets/css/atg.css">
+  <link rel="stylesheet" href="assets/css/devjy.css">
 
 </head>
 
@@ -30,7 +30,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <span>단 하나뿐인 이더리움 블록체인 중고장터</span>
+          <span>단 하나뿐인 이더리움 핸드폰 매장</span>
         </div>
       </div>
     </div>
@@ -45,107 +45,45 @@
   <div class="featured-page">
     <div class="container">
       <div class="row">
-        <div class="section-heading">
-          <div class="line-dec"></div>
-        </div>
-
-        <div class="wrap">
-          <div class="search">
-            <input type="text" class="searchTerm" placeholder="What are you looking for?">
-            <button type="submit" class="searchButton">
-              <i class="fa fa-search"></i>
-            </button>
+        <div class="col-md-4 col-sm-12">
+          <div class="section-heading ">
+            <div class="line-dec"></div>
+            <!-- <div id="filters" class="button-group pull-left"> -->
+                <!-- <button class="btn btn-primary" id="productList"> -->
+                  <h1>물품목록</h1>
+                <!-- </button> -->
+                <!-- <button class="btn btn-primary" id="productPurchased"> -->
+                    <!-- <h5>구매내역</h5> -->
+                <!-- </button> -->
+              <!-- </div> -->
           </div>
-        </div>
-        <div id="filters-1" class="button-group">
-          <button class="btn btn-primary" data-filter="*">가격순</button>
-          <button class="btn btn-primary" data-filter=".new">등록일자순</button>
-          <button class="btn btn-primary" data-filter=".low">상품등급순</button>
-        </div>
-
-        <div id="link-purchase" class="button-purchase">
-          <button class="btn btn-item_list" id="productList">물품목록</button>
-          <button class="btn btn-purchase_list" id="productPurchased">구매내역</button>
         </div>
       </div>
     </div>
-
   </div>
 
 
   <div class="featured container no-gutter">
-
-    <div class="row posts">
-      <div id="1" class="item new col-md-4">
-        <a href="product-detail.html">
-          <div class="featured-item" id="item-0">
-            <img src="assets/images/product-06.jpg" alt="">
-            <h4>Urna ac diam</h4>
-            <h6>$65.00</h6>
-          </div>
-        </a>
-      </div>
-      <div id="2" class="item high col-md-4">
-        <a href="product-detail.html">
-          <div class="featured-item" id="item-1">
-            <img src="assets/images/product-06.jpg" alt="">
-            <h4>Urna ac diam</h4>
-            <h6>$65.00</h6>
-          </div>
-        </a>
-      </div>
-      <div id="3" class="item low col-md-4">
-        <a href="product-detail.html">
-          <div class="featured-item" id="item-2">
-            <img src="assets/images/product-06.jpg" alt="">
-            <h4>Urna ac diam</h4>
-            <h6>$65.00</h6>
-          </div>
-        </a>
-      </div>
-      <div id="4" class="item low col-md-4">
-        <a href="product-detail.html">
-          <div class="featured-item" id="item-3">
-            <img src="assets/images/product-06.jpg" alt="">
-            <h4>Urna ac diam</h4>
-            <h6>$65.00</h6>
-          </div>
-        </a>
-      </div>
-      <div id="5" class="item new high col-md-4">
-        <a href="product-detail.html">
-          <div class="featured-item" id="item-4">
-            <img src="assets/images/product-06.jpg" alt="">
-            <h4>Urna ac diam</h4>
-            <h6>$65.00</h6>
-          </div>
-        </a>
-      </div>
-      <div id="6" class="item new col-md-4">
-        <a href="product-detail.html">
-          <div class="featured-item" id="item-5">
-            <img src="assets/images/product-06.jpg" alt="">
-            <h4>Urna ac diam</h4>
-            <h6>$65.00</h6>
-          </div>
-        </a>
-      </div>
-    </div>
+    <div id="product-list" class="row posts" ></div>
   </div>
-  <div class="page-navigation">
+  
+  <div class="featured-page">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <ul>
-            <li class="current-page page-number"><a href="#">1</a></li>
-            <li class="page-number"><a href="#" >2</a></li>
-            <li class="page-number"><a href="#">3</a></li>
-            <li class="page-number"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-          </ul>
+        <div class="col-md-4 col-sm-12">
+          <div class="section-heading">
+            <div class="line-dec"></div>
+            <h1>구매 내역</h1>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  
+  <div class="featured container no-gutter">
+    <div id="purchased-list" class="row posts" ></div>
+  </div>
+  
   <!-- Featred Page Ends Here -->
 
   <!-- Sub Footer Starts Here -->
@@ -173,8 +111,8 @@
   <script src="assets/js/custom.js"></script>
   <script src="assets/js/owl.js"></script>
   <script src="assets/js/isotope.js"></script>
-  <script src="assets/js/devjy.js"></script>
   <script src="index.js"></script>
+  <script src="assets/js/devjy.js"></script>
 
 
   <script language="text/Javascript">

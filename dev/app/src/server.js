@@ -13,6 +13,7 @@ web3.eth.net.getId().then(function (networkId) {
         deployedNetwork.address,
     );
     setupProductEventListener(instance);
+    setupBuyEventListener(instance);
 });
 
 // [mongodb connection]
@@ -61,11 +62,25 @@ app.get('/products', function(req,res){
     if (req.query.seller !== undefined){
         query['seller'] = {$eq: req.query.seller};
     }
+    if (req.query.buyer !== undefined){
+        query['buyer'] = {$eq: req.query.buyer};
+    }
     ProductModel.find(query, null, {sort: 'startTime'}, function(err, items){
-        console.log("The number of query result = " + items.length);
+        // console.log("The number of query result = " + items.length);
         res.send(items);
     });
 });
+
+app.get('/products/buy', function(req, res){
+    console.log(req.query);
+    ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : String(req.query.destination), phoneNumber: String(req.query.phoneNumber)}}, {new:true}, function(err,doc){
+        if(err){
+            console.log("Something wrong when update");
+        }
+        res.send(doc);
+        console.log(doc + "is updated");
+    });
+})
 
 
 function setupProductEventListener(_instance) {
@@ -74,6 +89,15 @@ function setupProductEventListener(_instance) {
     }, (error, event) => {
         console.log(event.returnValues);
         saveProduct(event.returnValues);
+    });
+}
+
+function setupBuyEventListener(_instance) {
+    _instance.events.NewBuy({
+        fromBlock: 0
+    }, (error, event) => {
+        console.log(event.returnValues);
+        addBuyerToProduct(event.returnValues);
     });
 }
 
@@ -93,7 +117,10 @@ function saveProduct(product) {
             startTime: product._startTime,
             price: product._price,
             condition: product._productCondition,
-            seller: product._seller
+            buyer: '0x0000000000000000000000000000000000000000',
+            seller: product._seller,
+            destination: 'destination',
+            phoneNumber: 'phoneNumber'
         });
 
         p.save(function(error) { // save product to DB
@@ -105,5 +132,14 @@ function saveProduct(product) {
                 });
             }
         });
+    });
+}
+
+function addBuyerToProduct(buy) {
+    ProductModel.findOneAndUpdate({blockchainId: buy._productId}, {$set: {buyer : buy._buyer}}, {new:true}, function(err,doc){
+        if(err){
+            console.log("Something wrong when update");
+        }
+        console.log(doc + "is updated");
     });
 }

@@ -43,7 +43,8 @@
 
 
   <!-- Page Content -->
-
+  <br>
+  <br>
   <div class="col-sm-12">
     <div style="display: none;" class="alert alert-success text-center" id="msg"></div>
   </div>
@@ -62,9 +63,7 @@
             <div id="slider" class="flexslider">
               <ul class="slides">
                 <div class="featured-item" id="product-id">
-                  <img src="assets/images/loading.png" alt="">
-                  <h4></h4>
-                  <h6></h6>
+                  <img src="assets/images/product-06.jpg" alt="">
                 </div>
                 </ul>
             </div>
@@ -72,21 +71,21 @@
         </div>
         <div class="col-md-6">
           <div class="right-content">
-            <h4 id="product-name" value="sss"></h4>
+            <h4 id="product-name"></h4>
             <h6 id="product-price"></h6>
             <p id="product-desc"></p>
             <span id="product-status">상태:구매 가능</span>
             <!--상태 거래중 구매가능 거래-->
             <form action="buy-info.html" method="get">
-                <input name="product-id" type="hidden" id="product-id" value="100">
-                <input name="product-price" type="hidden" id="product-price" value="1">
+                <input name="product-id" type="hidden" id="pid" value="100">
                 
               <label for="quantity">구매수량:</label>
-                <input name="quantity" type="quantity" class="quantity-text" id="quantity" value="1"> 
+                <input type="quantity" class="quantity-text" id="quantity" value="1"></div> 
                 <!-- onfocus="if(this.value == '1') { this.value = ''; }" onBlur="if(this.value == '') { this.value = '1';}" -->
-           
-                <input type="submit" class="button" value="주문하기">
+                <br>
+                <input type="submit" id="btn-product-detail" class="btn btn-primary btn-block" value="주문하기">
             </form>
+            <br>
             <div class="down-content">
               <div class="categories">
                 <h6>카테고리: <span><a href="#">중고폰</a>,<a href="#">iPhone</a></h6>
