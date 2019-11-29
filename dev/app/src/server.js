@@ -1,3 +1,4 @@
+
 var ecommerceStoreArtifact = require("../../build/contracts/EcommerceStore.json");
 var mongoose = require('mongoose');
 var express = require('express');
@@ -6,6 +7,7 @@ var express = require('express');
 // [contract initialize]
 var Web3 = require('web3');
 web3 = new Web3(new Web3.providers.WebsocketProvider('http://127.0.0.1:8545'))
+
 web3.eth.net.getId().then(function (networkId) {
     const deployedNetwork = ecommerceStoreArtifact.networks[networkId];
     instance = new web3.eth.Contract(
@@ -99,19 +101,23 @@ function setupBuyEventListener(_instance) {
         console.log(event.returnValues);
         addBuyerToProduct(event.returnValues);
     });
+
 }
 
 function saveProduct(product) {
     ProductModel.findOne({
+
         "blockchainId": product._productId
     }, function (err, dbProduct) {
         if (dbProduct != null) { // check db already has the product
+
             return;
         }
 
         var p = new ProductModel({
             name: product._name,
             blockchainId: product._productId,
+
             ipfsImageHash: product._imageLink,
             ipfsDescHash: product._descLink,
             startTime: product._startTime,
@@ -128,10 +134,12 @@ function saveProduct(product) {
                 console.log(error);
             } else {
                 ProductModel.countDocuments({}, function(err,count){
+
                     console.log("count is " + count);
                 });
             }
         });
+
     });
 }
 
@@ -142,4 +150,5 @@ function addBuyerToProduct(buy) {
         }
         console.log(doc + "is updated");
     });
+
 }

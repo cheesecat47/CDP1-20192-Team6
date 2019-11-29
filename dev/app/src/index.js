@@ -7,7 +7,7 @@ var ipfs = ipfsClient({
   host: 'localhost',
   port: '5001',
   protocol: 'http'
-})
+});
 var reader;
 
 const App = {
