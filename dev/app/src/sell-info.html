@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+  <title>블록체인 중고마켓, 안전한 거래</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/tooplate-main.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
+  <link rel="stylesheet" href="assets/css/flex-slider.css">
+  <link rel="stylesheet" href="assets/css/devjy.css">
+</head>
+
+<body>
+
+  <!-- Pre Header -->
+  <div id="pre-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <span>단 하나뿐인 이더리움 핸드폰 매장</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark static-top"></nav>
+
+  <!-- Page Content -->
+  <br>
+  <br>
+  <div class="col-sm-12">
+    <div style="display: none;" class="alert alert-success text-center" id="msg"></div>
+  </div>
+  <!-- Single Starts Here -->
+  <div class="single-product">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <div class="line-dec"></div>
+            <h1>배송 정보 </h1>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="map">
+            <img id="product-image" src="#" alt="No img.">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="right-content">
+            <div class="down-content">
+              <h4 id="product-name"></h4>
+              <h6 id="product-price"></h6>
+              <h6 id="product-seller"></h6>
+            </div>
+            <br>
+            <form name="deliver_form" action="" method="get">
+              <table>
+                <tr>
+                      <td><label for="status">배송 상태 : </label></td>
+                      <td id="product-status">발송 대기중</td>
+                    </tr>
+                <tr>
+                  <td><label for="buyer_address">배송희망주소: </label></td>
+                  <td id="buyer-address"></td>
+                </tr>
+                <tr>
+                  <td><label for="buyer_contact">구매자 전화번호: </label></td>
+                  <td id="buyer-phone"></td>
+                </tr>
+              </table>
+              <br>
+              <input type="button" id="release-funds" class="btn btn-primary btn-block" value="발송완료!">
+            </form>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Single Page Ends Here -->
+
+
+  <!-- Sub Footer Starts Here -->
+  <div class="sub-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="copyright-text">
+            <p>Copyright &copy; 2019 CDP1 - Team 6</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sub Footer Ends Here -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- Additional Scripts -->
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/owl.js"></script>
+  <script src="assets/js/isotope.js"></script>
+  <script src="assets/js/flex-slider.js"></script>
+  <script src="index.js"></script>
+  <script src="assets/js/devjy.js"></script>
+
+
+  <script language="text/Javascript">
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) {                   //declaring the array outside of the
+      if (!cleared[t.id]) {                      // function makes it static and global
+        cleared[t.id] = 1;  // you could use true and false, but that's more typing
+        t.value = '';         // with more chance of typos
+        t.style.color = '#fff';
+      }
+    }
+  </script>
+
+
+</body>
+
+</html>

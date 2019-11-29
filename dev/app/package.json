@@ -9,13 +9,14 @@
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.6.0",
-    "webpack": "^4.28.1",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14",
+    "express": "^4.15.4",
     "ipfs-http-client": "^29.1.1",
     "mongoose": "^5.4.20",
-    "express": "^4.15.4",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.19.4",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+
   },
   "dependencies": {
     "web3": "^1.0.0-beta.37"
