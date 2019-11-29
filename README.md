@@ -12,71 +12,64 @@
 #### Ubuntu 18.04 version
 
 1. Clone git  
-
    ```Bash
    $ git clone https://github.com/cheesecat47/CDP1-20192-Team6.git
+   cd CDP1-20192-Team6
    ```
 
-2. node.js
+1. Run 'install.sh'
+    ```Bash
+    $ ./install.sh
+    ```
 
-   ```Bash
-   $ apt install nodejs
-   ```
+### If you want to install manually, try these.  
+1. node.js
+    ```Bash
+    $ apt install nodejs
+    $ apt install npm
+    $ cd dev/app
+    $ npm install
+    $ npm install -g nodemon
+    ```
 
-3. ganache-cli  
+1. ganache-cli  
+    ```Bash
+    $ cd dev/app
+    $ npm install -g ganache-cli
+    ```
 
-   ```Bash
-   $ npm install ganache-cli
-   ```
+1. truffle
+    ```Bash
+    $ npm install -g truffle
+    ```
 
-4. web3
+1. Metamask  
+    https://metamask.io  
+    Download __Chrome__ extension.  
 
-   ```Bash
-   $ npm install web3@1.0.0-beta.37
-   ```
+1. IPFS daemon  
+    ```Bash
+    # Download IPFS Prebuild Package from this site.
+    # https://docs.ipfs.io/guides/guides/install/
+    $ tar xvfz 'download_ipfs_file.tar.gz'
+    $ cd go-ipfs
+    $ ./install.sh
+    
+    # Initialise IPFS Daemon
+    $ ipfs init
+    
+    # Allow IPFS to access with http protocol in web browser.
+    $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+    $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
+    $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
+    ```
 
-5. solc
-
-   ```Bash
-   $ npm install solc@0.5.3
-   ```
-
-6. truffle
-
-   ```Bash
-   $ npm install -g truffle
-   ```
-
-7. Metamask  
-   https://metamask.io  
-   Download Chrome extension.  
-
-8. IPFS daemon  
-
-   ```Bash
-   # https://ipfs.io/#install
-   $ git clone https://github.com/ipfs-shipyard/ipfs-desktop.git
-   $ cd ipfs-desktop
-   $ npm install
-   $ npm start
-   
-   # Initialise IPFS Daemon
-   $ rm -rf ~/.ipfs
-   $ ipfs init
-   
-   # Allow IPFS to access with http protocol in web browser.
-   $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-   $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
-   $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
-   ```
-
-9. MongoDB
-
-   ```bash
-   $ sudo apt-get update
-   $ sudo apt-get install mongodb
-   $ sudo mkdir -p /data/db
-   ```
+1. MongoDB
+    ```bash
+    $ sudo apt-get update
+    $ sudo apt-get install mongodb
+    $ sudo mkdir -p /data/db
+    ```
 
    
 
@@ -94,7 +87,7 @@
    ~/CDP1-20192-Team6/dev/app$ npm install
    ```
 
-2. Blockchain setting
+1. Blockchain setting
 
    * Run ganache on localhost:8545
 
@@ -108,7 +101,7 @@
    ~/CDP1-20192-Team6/dev$ truffle migrate 
    ```
 
-3. DB setting
+1. DB setting
 
    * Start mongoDB server (Initialize) on localhost:27017
 
@@ -118,15 +111,16 @@
    $ sudo mongod
    ```
 
-4. Node.js server setting 
+1. Node.js server setting 
 
    * Run server.js on nodemon  on localhost:3000
 
    ```bash
+   ~/CDP1-20192-Team6/dev/app$ npm install -g nodemon
    ~/CDP1-20192-Team6/dev/app/src$ nodemon server.js
    ```
 
-5. IPFS daemon  
+1. IPFS daemon  
 
    * Start IPFS daemon on port 5001
 
@@ -134,7 +128,7 @@
    $ ipfs daemon
    ```
 
-6. Run web hosting server
+1. Run web hosting server
 
    * Run webpack-dev-server  on localhost:8081
 
@@ -142,7 +136,7 @@
    ~/CDP1-20192-Team6/dev/app$ npm run dev
    ```
 
-7. (Optional) Add 10 product-samples to the Store 
+1. (Optional) Add 10 product-samples to the Store 
 
    * Run script to make samples
 

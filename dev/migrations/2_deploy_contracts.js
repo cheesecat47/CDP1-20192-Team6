@@ -1,8 +1,6 @@
-const ConvertLib = artifacts.require("ConvertLib");
-const MetaCoin = artifacts.require("MetaCoin");
+const EcommerceStore = artifacts.require("EcommerceStore");
 
-module.exports = function(deployer) {
-  deployer.deploy(ConvertLib);
-  deployer.link(ConvertLib, MetaCoin);
-  deployer.deploy(MetaCoin);
+module.exports = function(deployer) { 
+  deployer.deploy(EcommerceStore, web3.eth.getAccounts().then((accounts) => {return accounts[9];}));
 };
+// , accounts[9]
