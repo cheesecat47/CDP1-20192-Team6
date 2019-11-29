@@ -29,6 +29,7 @@
     $ apt install npm
     $ cd dev/app
     $ npm install
+    $ npm install -g nodemon
     ```
 
 1. ganache-cli  

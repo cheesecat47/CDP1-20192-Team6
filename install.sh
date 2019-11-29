@@ -26,6 +26,7 @@ sudo apt install -y nodejs
 sudo apt install -y npm
 cd $dev_app
 sudo npm -y install
+sudo npm -y install -g nodemon
 
 
 echo -e '\n#####\n#####\tInstall ganache-cli\n#####'
