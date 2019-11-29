@@ -74,7 +74,6 @@ app.get('/products', function(req,res){
 });
 
 app.get('/products/buy', function(req, res){
-    console.log(req.query);
     ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : String(req.query.destination), phoneNumber: String(req.query.phoneNumber)}}, {new:true}, function(err,doc){
         if(err){
             console.log("Something wrong when update");
