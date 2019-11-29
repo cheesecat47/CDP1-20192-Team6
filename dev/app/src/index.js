@@ -66,7 +66,6 @@ const App = {
           data: {}
         }).done(function (data) {
           var thisData = data[0];
-          console.log(Number(thisData["price"]));
           $("#product-id").attr("value", productId);
           $("#buy-now").submit(function (event) {
             $("#msg").hide();
@@ -80,6 +79,12 @@ const App = {
             });
             event.preventDefault();
           });
+          $.ajax({
+            url: `http://localhost:3000/products/buy?id=${thisData["blockchainId"]}&destination=${thisData["destination"]}&phoneNumber=${thisData["phoneNumber"]}`, // pass by URL
+            type: 'get',
+            contentType: "application/json; charset=utf-8",
+            data: {}
+          })
         });
 
 
@@ -191,7 +196,7 @@ const App = {
     } = this.instance.methods;
     let imageId = await this.saveImageOnIpfs(reader);
     let descId = await this.saveTextBlobOnIpfs(product["product-description"]);
-    addProductToStore(product["product-name"], product["product-category"], imageId,
+    addProductToStore(product["product-name"], "phone" /*category*/, imageId,
       descId, Date.parse(product["product-start-time"]) / 1000,
       this.web3.utils.toWei(product["product-price"], 'ether'), product["product-condition"]).send({
       from: this.account,
