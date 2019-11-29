@@ -1,11 +1,13 @@
+
 var ecommerceStoreArtifact = require("../../build/contracts/EcommerceStore.json");
 var mongoose = require('mongoose');
 var express = require('express');
 
-
+mongoose.set('useFindAndModify', false);
 // [contract initialize]
 var Web3 = require('web3');
 web3 = new Web3(new Web3.providers.WebsocketProvider('http://127.0.0.1:8545'))
+
 web3.eth.net.getId().then(function (networkId) {
     const deployedNetwork = ecommerceStoreArtifact.networks[networkId];
     instance = new web3.eth.Contract(
@@ -66,20 +68,21 @@ app.get('/products', function(req,res){
         query['buyer'] = {$eq: req.query.buyer};
     }
     ProductModel.find(query, null, {sort: 'startTime'}, function(err, items){
-        // console.log("The number of query result = " + items.length);
+        console.log("The number of query result = " + items.length);
         res.send(items);
     });
 });
 
 app.get('/products/buy', function(req, res){
-    console.log(req.query);
-    ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : String(req.query.destination), phoneNumber: String(req.query.phoneNumber)}}, {new:true}, function(err,doc){
+    console.log();
+    ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : req.query.destination, phoneNumber: req.query.phoneNumber}}, {new:true}, function(err,doc){
+        console.log('이것은 주소여야한다 : ' + String(req.query.id) + String(req.query.destination)+ String(req.query.phoneNumber));
         if(err){
             console.log("Something wrong when update");
         }
         res.send(doc);
         console.log(doc + "is updated");
-    });
+    }); 
 })
 
 
@@ -99,19 +102,23 @@ function setupBuyEventListener(_instance) {
         console.log(event.returnValues);
         addBuyerToProduct(event.returnValues);
     });
+
 }
 
 function saveProduct(product) {
     ProductModel.findOne({
+
         "blockchainId": product._productId
     }, function (err, dbProduct) {
         if (dbProduct != null) { // check db already has the product
+
             return;
         }
 
         var p = new ProductModel({
             name: product._name,
             blockchainId: product._productId,
+
             ipfsImageHash: product._imageLink,
             ipfsDescHash: product._descLink,
             startTime: product._startTime,
@@ -119,8 +126,8 @@ function saveProduct(product) {
             condition: product._productCondition,
             buyer: '0x0000000000000000000000000000000000000000',
             seller: product._seller,
-            destination: 'destination',
-            phoneNumber: 'phoneNumber'
+            destination: ' ',
+            phoneNumber: ' '
         });
 
         p.save(function(error) { // save product to DB
@@ -128,18 +135,21 @@ function saveProduct(product) {
                 console.log(error);
             } else {
                 ProductModel.countDocuments({}, function(err,count){
+
                     console.log("count is " + count);
                 });
             }
         });
+
     });
 }
 
 function addBuyerToProduct(buy) {
+
     ProductModel.findOneAndUpdate({blockchainId: buy._productId}, {$set: {buyer : buy._buyer}}, {new:true}, function(err,doc){
         if(err){
-            console.log("Something wrong when update");
+            console.log("fail to addBuyerToProduct()");
         }
-        console.log(doc + "is updated");
     });
+
 }

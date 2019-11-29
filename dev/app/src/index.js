@@ -7,7 +7,7 @@ var ipfs = ipfsClient({
   host: 'localhost',
   port: '5001',
   protocol: 'http'
-})
+});
 var reader;
 
 const App = {
@@ -65,16 +65,22 @@ const App = {
           contentType: "application/json; charset=utf-8",
           data: {}
         }).done(function (data) {
-          var thisData = data[0];
-          console.log(Number(thisData["price"]));
+          let thisData = data[0];
           $("#product-id").attr("value", productId);
           $("#buy-now").submit(function (event) {
+            console.log(thisData);
             $("#msg").hide();
             var sendAmount = Number(thisData["price"]);
-            App.instance.methods.buy(productId).send({
+            App.instance.methods.buy(productId).send({ // contract code
               value: sendAmount,
               from: App.account
             }).then(function () {
+              $.ajax({
+                url: "http://localhost:3000/products/buy?id="+ thisData["blockchainId"]+"&destination="+event.target[0].value+"&phoneNumber="+event.target[1].value, // pass by URL
+                type: 'get',
+                contentType: "application/json; charset=utf-8",
+                data: {}
+              });
               window.location.href = 'http://localhost:8081/product-detail.html?id=' + String(thisData['blockchainId']);
               alert("판매자에게 구매 요청을 보냈습니다.\n 상품 수령후 수령확인 버튼을 눌러주셔야 판매자에게 이더가 지급됩니다.");
             });
@@ -173,7 +179,7 @@ const App = {
         } = App.instance.methods;
         let productId = new URLSearchParams(window.location.search).get('id');
         console.lof(productId);
-        $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
+        $("#msg").html("환불이 신청되어 블록체인이 업데이트 되었습니다. 구매 검증후 이더가 환불됩니다.");
         $("#msg").show();
         refundAmountToBuyer(productId).send({
           from: App.account,
@@ -191,7 +197,7 @@ const App = {
     } = this.instance.methods;
     let imageId = await this.saveImageOnIpfs(reader);
     let descId = await this.saveTextBlobOnIpfs(product["product-description"]);
-    addProductToStore(product["product-name"], product["product-category"], imageId,
+    addProductToStore(product["product-name"], "phone" /*category*/ , imageId,
       descId, Date.parse(product["product-start-time"]) / 1000,
       this.web3.utils.toWei(product["product-price"], 'ether'), product["product-condition"]).send({
       from: this.account,
@@ -294,14 +300,14 @@ const App = {
       console.log(data);
       for (var p of data) {
         if (Number(p["blockchainId"]) != productId) {
-          $(".owl-carousel").trigger('add.owl.carousel', [$("<a href='product-detail.html'>\
-                                                              <div class='featured-item'>\
-                                                                <img src='http://localhost:8080/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
-                                                                <h4>" + p["name"] + "</h4> \
-                                                                <h6>" + displayPrice(String(p["price"])) + "</h6> \
-                                                              </div> \
-                                                            </a>\
-                                                        ")]).trigger('refresh.owl.carousel');
+          $(".owl-carousel").trigger('add.owl.carousel', [$("<a href='product-detail.html?id="+ p["blockchainId"]+"'>\
+          <div class='featured-item'>\
+          <img src='http://localhost:8080/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+          <h4>" + p["name"] + "</h4> \
+          <h6>" + displayPrice(String(p["price"])) + "</h6> \
+          </div> \
+          </a>\
+          ")]).trigger('refresh.owl.carousel');
         } else {
           $("#product-id").children("img").attr("src", "http://localhost:8080/ipfs/" + p["ipfsImageHash"]);
           $("#product-name").html(`<h4>${p['name']}</h4>`);
@@ -310,12 +316,9 @@ const App = {
             var desc = file.toString();
             $("#product-desc").text(desc);
           });
-
-          const i = await escrowInfo(productId).call();
-          if (p["buyer"] == '0x0000000000000000000000000000000000000000') {
-            $("#product-status").text("상태 : 구매가능");
-          } else {
-
+          try {
+            const i = await escrowInfo(productId).call();
+            console.log('status : 구매된 상태')
             $('#btn-product-detail').val("수령 확인");
             $('#btn-product-detail').prop('type', 'button');
 
@@ -336,28 +339,30 @@ const App = {
             if (i[4] >= 2) {
               $("#product-status").text("거래완료");
             }
-
-            $("#release-funds").click(function (event) {
-              const {
-                releaseAmountToSeller
-              } = App.instance.methods;
-              let productId = new URLSearchParams(window.location.search).get('id');
-              releaseAmountToSeller(productId).send({
-                from: App.account,
-                gas: 4700000
-              }).then(function(){
-                window.location.reload();
-                alert("상품수령이 확인되었습니다. 판매자에게 이더를 지급합니다.");
-              });
-            }); //release-funds
+          } catch (err) {
+            $("#product-status").text("상태 : 구매가능");
+            console.log('status: 구매되지 않은 상태');
           }
-
+          $("#release-funds").click(function (event) {
+            const {
+              releaseAmountToSeller
+            } = App.instance.methods;
+            let productId = new URLSearchParams(window.location.search).get('id');
+            releaseAmountToSeller(productId).send({
+              from: App.account,
+              gas: 4700000
+            }).then(function () {
+              window.location.reload();
+              alert("상품수령이 확인되었습니다. 판매자에게 이더를 지급합니다.");
+            });
+            $("#product-status").text("상태 : 구매가능");
+          }); //release-funds
         } // else
       } //for
     }); //query callback
-    
-    
-    
+
+
+
   },
 
   renderSellInfo: async function (productId) {
@@ -396,12 +401,12 @@ const App = {
       } = App.instance.methods;
 
       let productId = new URLSearchParams(window.location.search).get('blockchainId');
-      $("#msg").html("Your transaction has been submitted. please wait for few seconds for the confirmation");
-      $("#msg").show();
       releaseAmountToSeller(productId).send({
         from: App.account,
         gas: 4700000
       }).then(function () {
+        $("#msg").html("발송완료가 확인 되어서 블록체인에 업데이트 되었습니다. 구매자 확인후 이더가 지급됩니다.");
+        $("#msg").show();
         window.location.reload();
       });
     });
@@ -416,12 +421,12 @@ const App = {
       contentType: "application/json; charset=utf-8",
       data: {}
     }).done(function (data) {
-      for (var p of data){
+      for (var p of data) {
         console.log(p);
-        $("#index_buy_list").trigger('add.owl.carousel', 
-              [$("<a href='product-detail.html'>\
+        $("#index_buy_list").trigger('add.owl.carousel',
+          [$("<a href='product-detail.html?id="+p["blockchainId"]+"'>\
                     <div class='featured-item'>\
-                      <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                      <img src='http://localhost:8080/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
                       <h4>" + p["name"] + "</h4> \
                       <h6>" + displayPrice(String(p["price"])) + "</h6> \
                     </div> \
@@ -437,12 +442,12 @@ const App = {
       contentType: "application/json; charset=utf-8",
       data: {}
     }).done(function (data) {
-      for (var p of data){
+      for (var p of data) {
         console.log(p);
-        $("#index_sell_list").trigger('add.owl.carousel', 
-              [$("<a href='product-detail.html'>\
+        $("#index_sell_list").trigger('add.owl.carousel',
+          [$("<a href='product-detail.html?id="+p["blockchainId"]+"'>\
                     <div class='featured-item'>\
-                      <img src='http://ipfs.io/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
+                      <img src='http://localhost:8080/ipfs/" + p["ipfsImageHash"] + "' alt='Item 1'>\
                       <h4>" + p["name"] + "</h4> \
                       <h6>" + displayPrice(String(p["price"])) + "</h6> \
                     </div> \

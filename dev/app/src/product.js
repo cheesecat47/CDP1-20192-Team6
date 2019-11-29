@@ -1,3 +1,4 @@
+
 // init mongoose
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -23,3 +24,4 @@ var ProductSchema = new Schema({
 var ProductModel = mongoose.model('ProductModel', ProductSchema);
 
 module.exports = ProductModel;
+
