@@ -74,9 +74,9 @@ app.get('/products', function(req,res){
 });
 
 app.get('/products/buy', function(req, res){
-    console.log("hihhihiihi");
+    console.log();
     ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : req.query.destination, phoneNumber: req.query.phoneNumber}}, {new:true}, function(err,doc){
-        console.log('이것은 주소여야한다 : ' + typeof(req.query.id) + typeof(req.query.destination)+ String(req.query.phoneNumber));
+        console.log('이것은 주소여야한다 : ' + String(req.query.id) + String(req.query.destination)+ String(req.query.phoneNumber));
         if(err){
             console.log("Something wrong when update");
         }
