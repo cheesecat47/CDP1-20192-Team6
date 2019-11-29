@@ -3,7 +3,7 @@ var ecommerceStoreArtifact = require("../../build/contracts/EcommerceStore.json"
 var mongoose = require('mongoose');
 var express = require('express');
 
-
+mongoose.set('useFindAndModify', false);
 // [contract initialize]
 var Web3 = require('web3');
 web3 = new Web3(new Web3.providers.WebsocketProvider('http://127.0.0.1:8545'))
@@ -68,19 +68,21 @@ app.get('/products', function(req,res){
         query['buyer'] = {$eq: req.query.buyer};
     }
     ProductModel.find(query, null, {sort: 'startTime'}, function(err, items){
-        // console.log("The number of query result = " + items.length);
+        console.log("The number of query result = " + items.length);
         res.send(items);
     });
 });
 
 app.get('/products/buy', function(req, res){
-    ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : String(req.query.destination), phoneNumber: String(req.query.phoneNumber)}}, {new:true}, function(err,doc){
+    console.log("hihhihiihi");
+    ProductModel.findOneAndUpdate({blockchainId: req.query.id}, {$set: {destination : req.query.destination, phoneNumber: req.query.phoneNumber}}, {new:true}, function(err,doc){
+        console.log('이것은 주소여야한다 : ' + typeof(req.query.id) + typeof(req.query.destination)+ String(req.query.phoneNumber));
         if(err){
             console.log("Something wrong when update");
         }
         res.send(doc);
         console.log(doc + "is updated");
-    });
+    }); 
 })
 
 
@@ -124,8 +126,8 @@ function saveProduct(product) {
             condition: product._productCondition,
             buyer: '0x0000000000000000000000000000000000000000',
             seller: product._seller,
-            destination: 'destination',
-            phoneNumber: 'phoneNumber'
+            destination: ' ',
+            phoneNumber: ' '
         });
 
         p.save(function(error) { // save product to DB
@@ -143,11 +145,11 @@ function saveProduct(product) {
 }
 
 function addBuyerToProduct(buy) {
+
     ProductModel.findOneAndUpdate({blockchainId: buy._productId}, {$set: {buyer : buy._buyer}}, {new:true}, function(err,doc){
         if(err){
-            console.log("Something wrong when update");
+            console.log("fail to addBuyerToProduct()");
         }
-        console.log(doc + "is updated");
     });
 
 }
