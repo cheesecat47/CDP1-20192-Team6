@@ -68,6 +68,7 @@ const App = {
           let thisData = data[0];
           $("#product-id").attr("value", productId);
           $("#buy-now").submit(function (event) {
+            console.log('#buy-now.submit()');
             console.log(thisData);
             $("#msg").hide();
             var sendAmount = Number(thisData["price"]);
@@ -75,8 +76,15 @@ const App = {
               value: sendAmount,
               from: App.account
             }).then(function () {
+              console.log('App..send().then()');
+              console.log(thisData);
+              var buyer_addr = String(event.target[0].value);
+              var buyer_contact = String(event.target[1].value);
+
               $.ajax({
-                url: "http://localhost:3000/products/buy?id="+ thisData["blockchainId"]+"&destination="+event.target[0].value+"&phoneNumber="+event.target[1].value, // pass by URL
+                url: "http://localhost:3000/products/buy?id="+ thisData["blockchainId"]
+                                                  +"&destination="+buyer_addr
+                                                  +"&phoneNumber="+buyer_contact, // pass by URL
                 type: 'get',
                 contentType: "application/json; charset=utf-8",
                 data: {}
