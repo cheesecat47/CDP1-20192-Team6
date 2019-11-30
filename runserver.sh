@@ -43,7 +43,9 @@ fi
 
 # Truffle migrate
 echo -e 'Truffle migrate'
-gnome-terminal --title='truffle migrate' --working-directory=$dev -- /bin/bash -c "truffle migrate"
+cd $dev
+truffle migrate
+
 if [ $? -ne 0 ]
 then
     echo "Failed!"
