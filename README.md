@@ -22,6 +22,12 @@
     $ ./install.sh
     ```
 
+1. Run 'runserver.sh'
+    ```Bash
+    $ ./runserver.sh
+    ```
+
+
 ### If you want to install manually, try these.  
 1. node.js
     ```Bash
@@ -44,8 +50,12 @@
     ```
 
 1. Metamask  
-    https://metamask.io  
-    Download __Chrome__ extension.  
+    __[Metamask]__ is Chrome extension.  
+    If __[Chrome]__ is not installed in your computer, download it first.  
+    And then, download __[Metamask]__
+
+    [Metamask]: https://metamask.io
+    [Chrome]: https://www.google.com/chrome/  
 
 1. IPFS daemon  
     ```Bash
