@@ -322,7 +322,7 @@ const App = {
           $("#product-price").html('<h6>' + displayPrice(String(p['price'])) + '</h6>')
           ipfs.cat(String(p['ipfsDescHash'])).then(function (file) {
             var desc = file.toString();
-            $("#product-desc").text(desc);
+            $("#product-desc").html(desc);
           });
           try {
             const i = await escrowInfo(productId).call();
