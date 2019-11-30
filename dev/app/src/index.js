@@ -66,8 +66,11 @@ const App = {
           data: {}
         }).done(function (data) {
           let thisData = data[0];
+          let buyer_addr = "";
+          let buyer_contact = "";
           $("#product-id").attr("value", productId);
           $("#buy-now").submit(function (event) {
+            console.log('#buy-now.submit()');
             console.log(thisData);
             $("#msg").hide();
             var sendAmount = Number(thisData["price"]);
@@ -75,14 +78,21 @@ const App = {
               value: sendAmount,
               from: App.account
             }).then(function () {
+              console.log('App..send().then()');
+              console.log(thisData);
+              buyer_addr = String(event.target[0].value);
+              buyer_contact = String(event.target[1].value);
+
               $.ajax({
-                url: "http://localhost:3000/products/buy?id="+ thisData["blockchainId"]+"&destination="+event.target[0].value+"&phoneNumber="+event.target[1].value, // pass by URL
+                url: "http://localhost:3000/products/buy?id="+ thisData["blockchainId"]+"&destination="+buyer_addr+"&phoneNumber="+buyer_contact, // pass by URL
                 type: 'get',
                 contentType: "application/json; charset=utf-8",
                 data: {}
+              }).then(function(){
+                console.log('after change addr, contact info');
+                window.location.href = 'http://localhost:8081/product-detail.html?id=' + String(thisData['blockchainId']);
+                alert("판매자에게 구매 요청을 보냈습니다.\n 상품 수령후 수령확인 버튼을 눌러주셔야 판매자에게 이더가 지급됩니다.");
               });
-              window.location.href = 'http://localhost:8081/product-detail.html?id=' + String(thisData['blockchainId']);
-              alert("판매자에게 구매 요청을 보냈습니다.\n 상품 수령후 수령확인 버튼을 눌러주셔야 판매자에게 이더가 지급됩니다.");
             });
             event.preventDefault();
           });
@@ -314,7 +324,7 @@ const App = {
           $("#product-price").html('<h6>' + displayPrice(String(p['price'])) + '</h6>')
           ipfs.cat(String(p['ipfsDescHash'])).then(function (file) {
             var desc = file.toString();
-            $("#product-desc").text(desc);
+            $("#product-desc").html(desc);
           });
           try {
             const i = await escrowInfo(productId).call();
