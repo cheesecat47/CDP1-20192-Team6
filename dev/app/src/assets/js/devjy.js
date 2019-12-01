@@ -63,7 +63,7 @@ function fill_nav() {
     var innerbox = document.createElement('div');
     innerbox.className = 'container';
     innerbox.innerHTML = `
-        <a class="navbar-brand" href="#"><img src="assets/images/header-logo.png" alt=""></a>
+        <a class="navbar-brand" href="index.html"><img src="assets/images/header-logo.png" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
